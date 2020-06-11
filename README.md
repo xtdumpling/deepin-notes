@@ -1,2 +1,5 @@
-# deepin-notes
-Deepin折腾笔记
+# Deepin折腾笔记
+
+## 声明
+精力受限，Deepin折腾笔记v6.6为本人维护的最终版本，欢迎大家fork后完善发布。
+PDF请加QQ群19346666下载。
