@@ -1,0 +1,16 @@
+*.synctex(busy)
+*.pdf
+*.log
+*.aux
+*.toc
+*.gz
+*.idx
+*.out
+*.tmp
+*.exe
+*.rar
+*.in
+*.out
+out.txt
+in.txt
+.DS_Store

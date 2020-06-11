@@ -1,0 +1,2989 @@
+\documentclass[a4paper,fontset=fandol,zihao=-4,linespread=1.2]{ctexbook}
+
+% \setCJKmainfont{FandolFang-Regular.otf} %中文字体
+\setmainfont[Mapping=tex-text]{PT Mono} %英文字体
+\ctexset{
+  chapter/format = \Large\bfseries\centering,
+  section/format = \large\bfseries,
+  subsection/format = \normalsize\bfseries,
+  chapter/beforeskip = 0pt,
+  chapter/afterskip = 3ex plus 1ex minus 0.6ex,
+  section/beforeskip = 2.5ex plus 1ex minus 0.5ex,
+  section/afterskip = 1.5ex plus 1ex minus 0.3ex,
+  subsection/beforeskip = 2ex plus 1ex minus 0.4ex,
+  subsection/afterskip = 1ex plus 0.5ex minus 0.2ex,
+  today = big
+}
+
+\usepackage{geometry} %布局
+\geometry{top=20mm,bottom=20mm,left=22mm,right=22mm} %页边距
+
+\usepackage{fancyhdr} % 页眉页脚
+\pagestyle{fancy}
+\fancyfoot[L]{{\textcolor{red!80}{\hspace{0em}Deepin\hspace{0.3em}UOS\hspace{0.3em}深度技术群：19346666}}}
+
+\usepackage[unicode=false,colorlinks,linkcolor=blue]{hyperref} %超链接
+\usepackage{listings} %代码框
+\usepackage{xunicode} %代码框星号修复
+\usepackage{xcolor} %颜色
+
+\newfontfamily\mono{Source Code Pro}
+\lstset{
+	columns=flexible,
+	numbers=left,
+	numbersep=5pt,
+	frame=shadowbox,
+	xleftmargin=1em,
+	xrightmargin=1em,
+	backgroundcolor=\color{gray!2},
+	rulesepcolor=\color{gray!50},
+	basicstyle=\small\mono,
+	keywordstyle=\color{blue!80},
+	numberstyle=\tiny\mono\color{darkgray},
+	commentstyle=\it\mono\color{gray},
+	stringstyle=\color[RGB]{0,168,0},
+	emphstyle=\color[RGB]{166,83,0},
+	showstringspaces=false,
+	breaklines=true,
+	language=bash,
+}
+
+\makeatletter
+\lst@CCPutMacro
+    \lst@ProcessOther {"2D}{-{}}
+    \@empty\z@\@empty
+\makeatother
+
+\title{\kaishu {\textcolor{blue!80}{Deepin\hspace{0em}折腾笔记 v6.6}} \footnote{\textcolor{red!80}{本笔记所涉及到的代码或命令需结合上下文说明并理解，不能简单地复制粘贴后在终端执行。}} \ldots}
+\author{\fangsong Yuchen Deng〔语晨〕「{\textcolor{red!80}{\hspace{0em}Deepin\hspace{0.3em}UOS\hspace{0.3em}深度技术群：19346666}}」\footnote{{\textcolor{blue!80}{\hspace{0em}Deepin\hspace{0.3em}UOS\hspace{0.3em}深度技术\hspace{0.1em}QQ\hspace{0.1em}群：19346666，专注系统的各种问题解决，拒绝灌水。}}}}
+\date{\kaishu\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{Deepin桌面配置与技巧}
+
+\section{Super+S切换工作区}
+\begin{lstlisting}
+Super键就是WIN键。
+这个工作区快捷切换键最初由Ubuntu发行版引入。
+目前Deepin只能简单的将多个工作区放在一行横向排列。
+缺少智能的多行自适应布局。
+\end{lstlisting}
+
+\section{善用强大的Super键}
+\begin{lstlisting}
+Super	  ：启动器
+Super+S	：显示工作区
+Super+W	：显示当前工作区的窗口
+Super+A	：显示所有工作区的窗口
+Super+D	：显示桌面
+Super+E	：文件管理器
+Super+L	：锁屏
+\end{lstlisting}
+
+\section{启动器搜索支持拼音}
+\begin{lstlisting}
+开始菜单或启动器键盘输入“xk”，将显示“显卡驱动管理器”，支持模糊匹配。
+简拼、全拼都可以。
+\end{lstlisting}
+
+\section{“自然滚动”与macOS、Win10一致体验}
+\begin{lstlisting}
+控制中心-鼠标：打开“自然滚动”选项，可实现笔记本电脑触控板双指上下滚动页面时与手机、平板、macOS、Win10 保持相同体验。
+\end{lstlisting}
+
+\section{加速软件更新}
+\begin{lstlisting}
+控制中心-更新-更新设置，取消“智能软件源”，并切换到“中国科学技术大学”镜像源。
+\end{lstlisting}
+
+\section{解决安装系统后更新失败}
+\begin{lstlisting}
+通过“控制中心”更新时，如果提示“更新失败”，则可以按下快捷键Ctrl+Alt+T，在弹出的终端中输入命令：
+sudo apt upgrade
+回车后按提示操作即可。
+技巧推荐：输入命令的过程中按一次Tab键补全，两次Tab键候选。
+\end{lstlisting}
+
+\section{预装系统安装应用商店}
+\begin{lstlisting}
+默认预装Deepin专业版的品牌笔记本没有集成应用商店，Deepin官方给出了解决方案：
+https://mp.weixin.qq.com/s/UGX22z_jTZ2BN0BXV54hBw
+也可以更新系统后选择在命令行安装，按下快捷键Ctrl+Alt+T，在弹出的终端中输入命令：
+sudo apt install deepin-appstore
+按提示操作安装完成后，按下Super键（WIN键），就可以找到“应用商店”图标了。
+\end{lstlisting}
+
+\section{Chrome、VSCode使用自定义标题栏}
+\begin{lstlisting}
+系统原生标题栏很难看，和Chrome和VSCode自身的风格非常不协调。
+Google Chrome浏览器可以在标题栏右键，去掉“使用系统标题栏和边框”。
+VSCode可以在“文件-首选项-设置-窗口-Title Bar Style”中选择“custom”。
+这样就美观多了。
+\end{lstlisting}
+
+\section{应用商店卸载软件失败}
+\begin{lstlisting}
+Ctrl+Alt+T打开终端，输入命令：sudo apt install -f
+回车执行后重新在应用商店卸载即可。
+\end{lstlisting}
+
+\section{修改文件扩展名}
+\begin{lstlisting}
+方法一：在要修改的文件上弹出右键菜单，“属性”窗口可完成文件名、扩展名修改。
+方法二：进入文件所在目录，右键“在终端中打开”，执行：mv filename.txt filename.sh
+\end{lstlisting}
+
+\section{删除不需要的文件打开方式}
+\begin{lstlisting}
+文件管理器进入主目录，Ctrl+H显示隐藏文件，进入.confg目录，编辑mimeapps.list。
+\end{lstlisting}
+
+\section{KWin无法开启窗口特效}
+\begin{lstlisting}
+文件管理器进入主目录，Ctrl+H显示隐藏文件，进入.confg目录，删除kwinrc，注销或重启。
+\end{lstlisting}
+
+\section{启动器隐藏不想看到的启动项}
+\begin{lstlisting}
+文件管理器打开系统盘，进入/usr/share目录，在applications目录上右键“以管理员身份打开”。在不想看到的启动项图标上右键，“打开方式”选择“编辑器”，添加：NoDisplay=true
+保存。
+\end{lstlisting}
+
+\section{创建数据盘}
+\begin{lstlisting}
+只要存在一个不挂载任何路径的分区，且该分区的卷标为“_dde_data”即可。卷标修改请参考“修改磁盘卷标”小节。
+\end{lstlisting}
+
+\section{启动器创建“我的世界”启动项}
+\begin{lstlisting}
+在应用商店里安装软件后，就可以在启动器里找到该软件的一个启动项，启动软件变得非常方便。在启动项右键菜单上还提供了“发送到桌面”、“发送到任务栏”、“开机自动启动”等简捷功能。
+而所谓的启动项，本质就是一个后缀为“.desktop”的文件，可以在系统盘/usr/share/applications/里看到。
+但是，在/usr/share/applications/里创建启动项并不是最佳的位置。
+最佳位置在主目录 ~/.local/share/applications 里。
+下面以创建Minecraft(我的世界)为例讲解。
+首先用编辑器创建文件 ~/.local/share/applications/Minecraft.desktop ,添加以下内容：
+[Desktop Entry]
+Categories=Game;
+Comment=Minecraft
+Exec=/home/<用户名>/Minecraft/Minecraft.sh
+Icon=minecraft
+Name=Minecraft
+Name[zh_CN]=我的世界
+Terminal=false
+Type=Application
+X-Deepin-Vendor=user-custom
+特别注意1：所有的路径都必须是绝对路径，而且不识别$HOME、~这些常见的bash变量。
+特别注意2：Icon虽然可以用绝对路径的图标，但不能自适应大小。推荐把图标拷贝到~/.local/share/icons/hicolor/的各个尺寸目录里，文件名为minecraft。
+Minecraft.sh就是我的世界的启动脚本，内容如下：
+#!/bin/bash
+cd $HOME/Zz/Minecraft
+java -jar HMCL.jar
+HMCL启动器下载地址：https://github.com/huanghongxun/HMCL
+需要安装Java运行时：sudo apt install default-jre openjfx
+\end{lstlisting}
+
+\section{VirtualBox支持USB2.0/3.0设备}
+\begin{lstlisting}
+首先要安装扩展：sudo apt install virtualbox-extension-pack
+其次要添加用户组：sudo adduser <用户名> vboxusers
+重启生效。
+查看确认用户组：groups <用户名>
+从用户组中删除：sudo deluser <用户名> vboxusers
+\end{lstlisting}
+
+\section{简易文字编辑器}
+\begin{lstlisting}
+deepin的编辑器打开大文件太慢了，这个问题官方有bug报告，说是为了兼容触屏而选择的一种妥协方案，结果牺牲了打开大文件时的性能。
+暂时的解决：考虑安装leafpad，用于打开大的文本文件。
+sudo apt install leafpad #简易文字编辑器
+\end{lstlisting}
+
+\section{调整桌面字体大小}
+\begin{lstlisting}
+控制中心 - 个性化 - 字体，将大小调整为15。
+\end{lstlisting}
+
+\section{安装字体的另一种方法}
+\begin{lstlisting}
+Deepin提供了字体安装器，拖动字体文件到这个应用上就完成字体安装了，很方便。
+但有时为了在不同Deepin系统里使用相同的字体，还有一个方法是把ttf字体文件拷贝到$HOME/.local/share/fonts目录下。
+平常注意这个目录的备份，在新系统上还原配置，就可以享受相同的字体了。
+\end{lstlisting}
+
+\section{将当前位置加入书签}
+\begin{lstlisting}
+文件管理器打开常用目录，按下快捷键Ctrl+D，可加入左侧书签，方便以后快速打开。
+\end{lstlisting}
+
+\section{重置默认打开方式}
+\begin{lstlisting}
+部分四字母后缀名的文件无法设置默认打开方式，估计是BUG。例如xlsx电子表格文件，默认总是用归档管理器file-roller打开。
+解决方法：删除默认打开方式配置文件～/.config/mimeapps.list，注销。
+\end{lstlisting}
+
+\section{Nemo文件管理器}
+\begin{lstlisting}
+深度文件管理器在处理大量图片时，容易崩溃。此外，删除存在大量文件的目录时，会很低效且偶尔删除失败。
+推荐安装Nemo文件管理器作为备用。
+sudo apt install nemo gnome-terminal cinnamon-l10n --no-install-recommends -y #文件管理器和终端
+安装完成后，启动器中寻找“文件”。
+\end{lstlisting}
+
+\section{恢复默认文件管理器}
+\begin{lstlisting}
+安装Visual Studio Code后，会发现在谷歌浏览器中下载文件后，如果点击“在文件夹中显示”时弹出Visual Studio Code窗口。
+解决办法：在文件管理器里随意创建一个空文件夹，然后在这个文件夹上点击右键，从右键菜单里选择“打开方式”，把“文件管理器”设置为默认程序即可。
+此外，控制中心有常用的默认程序配置功能。
+\end{lstlisting}
+
+\section{VLC视频播放器}
+\begin{lstlisting}
+作为深度自带的视频播放器的补充，推荐安装跨平台的视频播放器VLC作为备用。
+优点是速度快，兼容所有视频格式。
+sudo apt install vlc
+\end{lstlisting}
+
+\section{audacious音频播放器}
+\begin{lstlisting}
+深度自带的音频播放器默认单曲循环，没有单曲播放后自行停止的功能。
+而audacious号称Linux系统下的Foobar2000，值得推荐！
+sudo apt install audacious
+\end{lstlisting}
+
+\section{配置Flatpak软件库}
+\begin{lstlisting}
+安装：sudo apt install flatpak
+添加：flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+注销或重启生效。安装示例：flatpak install blender
+\end{lstlisting}
+
+
+\chapter{Deepin常见终端命令行}
+
+\section{常用Linux文件目录命令}
+\begin{lstlisting}
+ls #列出目录
+ls -l #使用格式化列出文件
+ls -al #使用格式化列出所有文件，含隐藏文件
+cd dir #进入目录dir
+cd #进入主目录home
+pwd #显示当前目录
+mkdir dir #创建目录dir
+rm file #删除文件file
+rm -r dir #删除目录dir及子目录
+rm -f file #强制删除文件file
+rm -rf dir #强制删除目录dir及子目录
+cp file1 file2 #将文件file1复制到文件file2
+cp -r dir1 dir2 #将目录dir1复制到目录dir2
+mv file1 file2 #将file1重命名或移动到file2
+ln -s file link #创建file的符号连接link
+touch file #创建file
+cat file #显示file内容
+more file #分屏查看file的内容
+less file #滚动查看file的内容
+head file #查看file的前10行
+tail file #查看file的后10行
+tree /boot/efi #查看目录树结构，需要安装：sudo apt install tree
+\end{lstlisting}
+
+\section{更换主机名}
+\begin{lstlisting}
+sudo deepin-editor /etc/hostname
+替换成新的主机名，重启电脑。
+\end{lstlisting}
+
+\section{找到命令所在路径和所属软件包}
+\begin{lstlisting}
+查找编辑器所在路径：which deepin-editor
+输出“/usr/bin/deepin-editor”
+查询文件属于哪个包：dpkg -S /usr/bin/deepin-editor
+输出“deepin-editor: /usr/bin/deepin-editor”
+冒号之前的“deepin-editor”就是软件包。
+\end{lstlisting}
+
+\section{APT软件包管理扩展用法}
+\begin{lstlisting}
+大多数的软件安装、卸载都应该在深度系统“应用商店”里可视化操作。下面以软件包“package-name”为例，总结软件包相关的常用命令：
+安装软件包：sudo apt install package-name
+安装并修复依赖关系：sudo apt install -f package-name
+重新安装软件包：sudo apt install --reinstall package-name
+移除软件包但保留系统配置：sudo apt remove package-name
+移除软件包且清除系统配置：sudo apt purge package-name
+移除不需要的软件包并清除配置：sudo apt autoremove --purge
+罗列所有软件包：apt list *weixin*
+罗列已安装软件包：apt list --installed fcitx*
+搜索软件包：apt search --names-only package-name
+查看软件包内文件明细：dpkg -L package-name
+\end{lstlisting}
+
+\section{查询系统信息}
+\begin{lstlisting}
+安装查询软件：sudo apt install neofetch screenfetch
+终端查询命令：neofetch 或 screenfetch
+常用命令还有：
+uname -a #查询内核版本
+cat /proc/cpuinfo #查询CPU信息
+hostname #查看计算机名
+lspci #列出所有PCI设备
+lsusb #列出所有USB设备
+lsmod #列出加载的内核模块
+env #查看环境变量资源
+free -m #查看内存使用量和交换区使用量
+df -h #查看各分区使用情况
+ifconfig #查看网络接口属性，需 sudo apt install net-tools 或 ip address
+route -n #查看路由表，或 ip route
+\end{lstlisting}
+
+\section{tar命令行压缩解压}
+\begin{lstlisting}
+压缩： tar -cJvf [目标文件名].tar.xz [源文件名/目录名]
+解压： tar -xJvf [源文件名].tar.xz
+-c: 建立压缩档案
+-x：解压
+-t：查看内容
+-r：向压缩归档文件末尾追加文件
+-u：更新原压缩包中的文件
+-v：显示所有过程
+-J：有LZMA属性的
+-z：有gzip属性的
+-j：有bz2属性的
+万能解压：tar -xvf filename，可根据文件后缀名自动判断。
+\end{lstlisting}
+
+\section{7z命令行压缩解压}
+\begin{lstlisting}
+软件安装：sudo apt install p7zip-full
+压缩： 7z a [目标文件名].7z [源文件名/目录名]
+解压并解包： 7z x [源文件名].7z
+\end{lstlisting}
+
+\section{unar万能解压}
+\begin{lstlisting}
+unar对压缩包中的中文编码支持非常好，是一个近乎万能的解压工具，用法很简单：
+用法：unar [options] archive [files ...]
+帮助：unar --help
+\end{lstlisting}
+
+\section{查找删除重复文件}
+\begin{lstlisting}
+首先安装命令行工具：sudo apt install fdupes
+查找重复文件：使用-r选项在每个目录包括其子目录中递归搜索重复文件。
+删除重复文件：使用-d选项删除重复文件，同时由用户选择保留一个副本。
+只保留第一个：使用-dN选项删除重复文件，同时只保留第一个副本。慎用！
+查找当前目录及子目录重复文件：fdupes -r .
+删除当前目录重复文件：fdupes -d .
+删除当前目录及子目录重复文件且只保留第一个副本：fdupes -rdN .
+\end{lstlisting}
+
+\section{打印目录结构}
+\begin{lstlisting}
+安装：sudo apt install tree
+例如：tree /boot/efi/EFI
+\end{lstlisting}
+
+
+\chapter{Deepin硬件与驱动}
+
+\section{安装Nvidia显卡闭源驱动}
+\begin{lstlisting}
+开始菜单或启动器键盘输入“xk”搜索“显卡驱动管理器”并启动，即可安装显卡驱动。如果显卡驱动管理器安装失败，请继续往下看。
+首先判断是单显卡，还是双显卡：lspci |grep -Ei "VGA|3D|NVIDIA"
+确定Intel和Nvidia双显卡后，请参考第二节“双显卡用户驱动Nvidia独显”。
+否则请检测适合本机的显卡驱动：nvidia-detect
+如果提示nvidia-detect命令不存在，则先安装：sudo apt install nvidia-detect
+如果检测结果返回nvidia-driver，则：sudo apt install nvidia-driver
+如果仍然失败，则尝试彻底禁掉nouveau驱动：sudo dedit /etc/default/grub
+修改：GRUB_CMDLINE_LINUX="rd.driver.blacklist=nouveau modprobe.blacklist=nouveau nvidia-drm.modeset=1"
+保存退出后执行：sudo update-grub
+重启电脑，再次执行 sudo apt install nvidia-driver 后重启。
+如果仍然失败，请参考第三节“更新官方Nvidia显卡驱动”内容。
+\end{lstlisting}
+
+\section{双显卡用户驱动Nvidia独显}
+\begin{lstlisting}
+第一步：xrandr --listproviders #双显卡应该有两行输出，但也可能该命令无法识别
+第二步：确定Nvidia显卡的BusID，执行lspci |grep NVIDIA
+示例输出：04:00.0 3D controller: NVIDIA Corporation GK208M [GeForce 920M]
+根据行首数字“04:00.0”确定显卡的BusID为："PCI:4:0:0"。
+第三步：编写Nvidia显卡的配置文件，sudo dedit /etc/X11/xorg.conf，复制以下内容后替换你显卡的BusID。注意：以下步骤如果有一个字母错误，都可能启动黑屏。
+Section "Module"
+  Load "modesetting"
+EndSection
+Section "Device"
+  Identifier "nvidia"
+  Driver "nvidia"
+  BusID "PCI:4:0:0"
+EndSection
+第四步：在LightDM启动时设置独显运算核显输出
+参考以下内容修改配置：sudo dedit /etc/lightdm/lightdm.conf
+[Seat:*]
+...
+display-setup-script=sh -c "xrandr --setprovideroutputsource modesetting NVIDIA-0; xrandr --auto"
+第五步：安装Nvidia显卡驱动和工具 sudo apt install nvidia-driver nvidia-smi nvidia-settings
+重启后，lspci -k |egrep -A2 "VGA|3D" 或者nvidia-smi判断N卡驱动情况。
+\end{lstlisting}
+
+\section{更新官方Nvidia显卡驱动}
+\begin{lstlisting}
+驱动下载：https://www.nvidia.cn/drivers/unix/
+首先进入系统运行级别3：
+sudo init 3
+登陆shell，如果曾经安装过N卡驱动，则需要先卸载旧Nvidia驱动：
+sudo apt purge nvidia*
+sudo apt autoremove --purge
+然而就可以顺利安装从英伟达官方网站下载的最新驱动了：
+sudo ./NVIDIA-Linux-x86_64-430.34.run
+安装完成后如果重启黑屏，请参看疑难解答双显卡相关内容。
+安装前需要右键属性添加可执行权限，或者：
+sudo chmod +x ./NVIDIA-Linux-x86_64-430.34.run
+重启后可命令行查看硬件驱动情况：lspci -k |egrep -A2 "VGA|3D"
+还可以：sudo apt install nvidia-smi，之后执行nvidia-smi命令查询。
+\end{lstlisting}
+
+\section{老Nvidia显卡安装驱动}
+\begin{lstlisting}
+首先安装N卡驱动检测工具：sudo apt install nvidia-detect
+运行检测命令：nvidia-detect
+输出示例：
+Detected NVIDIA GPUs:...
+It is recommended to install the
+    nvidia-legacy-340xx-driver
+根据提示安装驱动：sudo apt install nvidia-legacy-340xx-driver
+详见：https://wiki.deepin.org/wiki/%E6%98%BE%E5%8D%A1
+\end{lstlisting}
+
+\section{驱动显卡后黑屏或卡LOGO}
+\begin{lstlisting}
+Ctrl+Alt+F2进tty2，sudo apt purge nvidia*卸载N卡驱动后，按上面双显卡步骤操作。
+如果xrandr --listproviders显示只有独显，请省略双显卡驱动的第四步。
+\end{lstlisting}
+
+\section{双显卡驱动大黄蜂方案}
+\begin{lstlisting}
+参考：https://wiki.archlinux.org/index.php/Bumblebee_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
+NVIDIA的Optimus技术， 允许自动切换显卡的使用，权衡了续航和性能之间的问题。
+大黄蜂"Bumblebee 致力于使 NVIDIA Optimus 在 GNU/Linux 系统上可用，实现两块不同的供电配置的显卡同时插入使用，共享同一个 framebuffer。"
+Bumblebee 试图模拟 Optimus 技术的行为；当需要的时候，使用独立显卡进行渲染，不使用的时候则关闭。
+查询是否可用：optirun glxgears -info
+强制独显输出：optirun command...
+奇怪的是：vblank_mode=0 optirun glxgears 帧频很低，原因未知。
+\end{lstlisting}
+
+\section{显卡驱动与性能测试}
+\begin{lstlisting}
+可以通过在终端执行FPS测试命令，判断自己显卡驱动是否正常工作：
+sudo apt install mesa-utils
+vblank_mode=0 glxgears
+一般FPS能达到3000以上，就说明显卡驱动能正常工作了。
+建议使用应用商店的“显卡驱动管理器”切换或者安装驱动。
+不到迫不得已，请不要升级内核。
+官方维基：https://wiki.deepin.org/index.php?title=%E6%98%BE%E5%8D%A1&language=en#.E7.AE.80.E4.BB.8B
+NVIDIA显卡安装闭源驱动后，vblank_mode=0选项无效，需要从自带的配置程序“OpenGL Settings”中取消垂直同步刷新功能。
+sudo apt install nvidia-settings
+nvidia-settings
+\end{lstlisting}
+
+\section{HP打印机驱动}
+\begin{lstlisting}
+推荐在“打印管理器”或“打印设置”中添加打印机。也可以自行安装：
+sudo apt install hplip hplip-gui hplip-plugin
+安装完成后，终端运行命令：hp-setup，按步骤添加打印机。
+驱动主页：https://developers.hp.com/hp-linux-imaging-and-printing
+同为Deepin系统的话，“打印设置”里添加网络打印机可以轻松共享。
+\end{lstlisting}
+
+\section{HP打印机备用驱动}
+\begin{lstlisting}
+foo2zjs是一个基于ZjStream协议的Linux开源驱动，项目地址：http://foo2zjs.rkkda.com
+源码下载地址：http://foo2zjs.rkkda.com/foo2zjs.tar.gz
+可以通过项目地址查到支持的打印机列表。对于不支持的打印机，作者还提供了更多驱动，搜索“Unsupported Printer”即可在表格中定位。
+一定要认真按照作者提示：不要从仓库中下载，而是选择从源码中编译安装。
+编译：make
+安装：sudo make install
+之后即可通过启动器“打印设置”添加打印机。
+更多打印机驱动：http://rkkda.com/
+\end{lstlisting}
+
+\section{支持Linux的打印机}
+\begin{lstlisting}
+Brother：https://www.brother.cn/
+奔图：http://www.pantum.com/
+以上品牌部分打印机官方提供驱动，未经测试，仅供参考。
+\end{lstlisting}
+
+\section{驱动惠普扫描仪}
+\begin{lstlisting}
+命令行查询扫描仪：scanimage -L 看能否检测到扫描仪。
+命令行扫描：scanimage >test.png
+安装使用扫描易：sudo apt install simple-scan
+扫描易连接扫描仪失败：sudo hp-plugin，按提示完成插件安装。
+或从源里安装扫描仪连接插件：sudo apt install hplip-plugin
+或手动下载安装：http://www.openprinting.org/download/printdriver/auxfiles/HP/plugins/
+可能需要：sudo apt-get install hplip printer-driver-hpcups
+可以用命令lsusb查询硬件是否连接。
+\end{lstlisting}
+
+\section{触控版、无线网卡和蓝牙}
+\begin{lstlisting}
+作者：Sam（QQ：13976001016）
+触控版、无线网卡和蓝牙不工作时，建议更新硬件驱动：linux-firmware
+可以从这里下载Ubuntu的硬件驱动最新版：http://ftp.sjtu.edu.cn/ubuntu/pool/main/l/linux-firmware/
+例如当前最新版：http://ftp.sjtu.edu.cn/ubuntu/pool/main/l/linux-firmware/linux-firmware_1.186_all.deb
+下载安装，重启。
+如果问题仍然无法解决，请尝试升级内核。
+\end{lstlisting}
+
+\section{查询无线网卡型号}
+\begin{lstlisting}
+个别无线网卡可能需要单独下载安装驱动：sudo lshw -c network
+\end{lstlisting}
+
+\section{无线网卡加速}
+\begin{lstlisting}
+sudo deepin-editor /etc/modprobe.d/iwlwifi.conf
+将11n_disable=1修改为11n_disable=0
+重启电脑。
+\end{lstlisting}
+
+\section{无线网卡解锁或蓝牙加锁}
+\begin{lstlisting}
+安装系统时或安装系统后无法驱动网卡，需要先排查笔记本是否有无线锁：检查键盘功能键。
+查看：rfkill list
+解锁无线：sudo rfkill unblock wifi
+锁定蓝牙：sudo rfkill block bluetooth
+\end{lstlisting}
+
+\section{判断缺少哪些硬件驱动}
+\begin{lstlisting}
+sudo update-initramfs -u
+如发现有固件驱动缺失，可以从这个链接下载：
+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree
+之后放到/lib/firmware/对应目录下，并再次运行sudo update-initramfs -u更新。
+注意：自己下载的固件在未来可能会跟系统新的固件包冲突，若是存在同名文件的话新固件包的安装会报错，这时需要把之前下载的固件手动删除。
+\end{lstlisting}
+
+\section{查询声卡信息}
+\begin{lstlisting}
+aplay -l
+dmesg |grep snd
+lspci |grep Audio
+sudo lshw -c sound
+\end{lstlisting}
+
+
+\chapter{Deepin系统备份与还原}
+
+\section{系统快照，折腾无忧}
+\begin{lstlisting}
+首先从应用商店搜索安装Timeshift，通过为系统制作快照，让系统还原到你想要的时间点。折腾必备，强烈推荐！
+快照类型：RSYNC，除非你的文件系统是btrfs。
+位置：建议选择/home挂载的分区。
+快照等级：建议禁用计划，或者勾选每月2次。推荐养成手动创建快照的好习惯，特别是当涉及更新显卡驱动、内核等重要操作的时候。
+用户：新手建议保持默认的“排除一切”。熟练后考虑选择“包含隐藏文件”并结合“筛选”可更稳妥的折腾。
+筛选：可随意添加，-号代表排除，+号代表添加。同一目录“排除在前，添加在后！”
+例如我的筛选部分列表如下：
+- /home/<用户名>/.deepinwine
+- /home/<用户名>/.wine
+- /home/<用户名>/.config/google-chrome
+- /home/<用户名>/.cache
++ /home/<用户名>/.**
+- /root/**
+配置完成后即可创建快照。
+第一次快照需要完全备份，时间比较长，请耐心等待。之后凡是没修改的文件都只建立软链接，速度就非常快了。
+如果进不去桌面，可以在命令行下恢复。
+查看：sudo timeshift --list
+还原：sudo timeshift --restore
+更多用法：timeshift --help
+\end{lstlisting}
+
+\section{硬盘或分区克隆及恢复}
+\begin{lstlisting}
+推荐使用Clonezilla（再生龙）：http://www.clonezilla.org/
+dd命令底层低效，仅供备用：
+备份：sudo dd if=/dev/sda1 of=~/elf.bak status=progress
+还原：sudo dd if=~/elf.bak of=/dev/sda1 status=progress
+压缩备份：sudo dd if=/dev/sda1 status=progress | gzip -c > ~/elf.bak
+压缩还原：gunzip -c ~/elf.bak | sudo dd of=/dev/sda1 status=progress
+\end{lstlisting}
+
+\section{备份还原硬盘分区表}
+\begin{lstlisting}
+备份分区表：sudo sfdisk -d /dev/sdX > /path/to/fqb
+还原分区表：sudo sfdisk /dev/sdX < /path/to/fqb
+\end{lstlisting}
+
+\section{再生龙启动盘制作}
+\begin{lstlisting}
+Clonezilla（再生龙）官网：http://www.clonezilla.org/
+官网速度较慢，建议从SF下载：https://sourceforge.net/projects/clonezilla/files/
+请下载适合USB存储介质的zip压缩包，例如clonezilla_live_stable目录下的clonezilla-live-2.6.3-7-i686.zip
+为U盘创建GPT格式分区表并创建两个分区，第二个分区300MB，用于存放Clonezilla再生龙启动镜像，第一个分区占用U盘除EFI分区300MB外的所有空间，并格式化成exfat分区，用于存放再生龙磁盘备份文件，也方便以后通过再生龙还原。U盘分区与格式化详见“跨平台可读写文件系统exfat的格式化”小节。
+将clonezilla-live-2.6.3-7-i686.zip解压到U盘第二个分区（FAT32）根目录下。
+重启电脑，享用。
+注意1：以上方法不适用传统MBR磁盘分区，MBR磁盘引导请参考：http://www.clonezilla.org/liveusb.php
+注意2: 之所以把EFI创建在第二个分区，是为了兼容Windows系统，该系统下U盘只支持一个分区。
+注意3: 如果想在macOS平台下格式化第一个分区，需要利用GParted把第二个分区标志设置为“boot,esp”。此外，设置这个标志后，想使用第二个分区时，需要先手动挂载，Deepin系统下推荐用“磁盘”应用挂载。
+注意4: 再生龙默认会排除正在使用的磁盘，提示找不到U盘时，Ctrl+C跳过即可。
+\end{lstlisting}
+
+\section{再生龙分区备份恢复到新硬盘}
+\begin{lstlisting}
+如果源磁盘数据HOME分区以及_dde_data数据盘占用空间过大或涉及个人隐私不便于单位共享时，全盘备份就不适合了。
+此时可以只备份EFI和ROOT分区，还原到新硬盘后适当的调整就可以正常使用。
+1. 还原时选择“专家模式”，在“额外的高级参数”页面选择“-k1 照比例放大产生硬盘分割表”；
+2. 完成分区恢复后，进入命令列，执行：
+sudo su && cd /home/partimag && ls
+可以找到你U盘中分区备份所在目录，进入该目录并查看blkid.list文件，根据相应分区的uuid重新格式化，例如：
+mkswap -U a5fd6924-b890-44e9-b96c-ccbbf92be628 /dev/sda2
+mkfs.ext4 -L Home -U beeb0e87-46f4-4a53-b828-6a2fda66a1b9 /dev/sda4
+mkfs.ext4 -L _dde_data -U 5c86adb1-7cb3-4a39-81fb-490e748dd27d /dev/sda5
+重启后会发现无法登陆DDE，解决方法请参照“主目录被误删除的恢复方法”。
+\end{lstlisting}
+
+\section{再生龙备份恢复到大容量磁盘}
+\begin{lstlisting}
+如果目标磁盘空间比源磁盘空间大，再生龙在恢复磁盘备份后，会导致目标磁盘有部分空间处于未使用状态，浪费了。
+解决方法：还原时选择“专家模式”，在“额外的高级参数”页面选择“-k1 照比例放大产生硬盘分割表”。
+\end{lstlisting}
+
+\section{备份常见的用户配置}
+\begin{lstlisting}
+有时需要对$HOME主目录下的部分软件配置压缩备份，以便在另一台Deepin系统上解压还原，或者格式化磁盘后恢复配置。
+主目录下的配置文件默认是隐藏的，即以"."开头。显示这些隐藏文件的快捷键是Ctrl+H。
+例如我会不定期压缩备份这些目录或文件：
+$HOME/.config/autostart
+$HOME/.config/Code/User/keybindings.json
+$HOME/.config/Code/User/settings.json
+$HOME/.config/google-chrome
+$HOME/.config/shadowsocks-qt5
+$HOME/.local/share/applications
+$HOME/.local/share/fonts
+$HOME/.ssh
+$HOME/.vscode
+$HOME/.gitconfig
+$HOME/.profile
+俗话说“有备无患”，重要资料、配置及时备份，可以提高学习、工作效率。
+压缩包格式建议选择“.tar.xz”。
+\end{lstlisting}
+
+\section{备份还原硬盘MBR}
+\begin{lstlisting}
+备份MBR：sudo dd if=/dev/sdX of=/path/to/mbr bs=512 count=1
+还原MBR：sudo dd if=/path/to/mbr of=/dev/sdX bs=512 count=1
+MBR只还原分区表：sudo dd if=/path/to/mbr of=/dev/sdX bs=66 skip=446 count=1
+MBR清空引导记录：sudo dd if=/dev/zero of=/dev/sdX bs=446 count=1
+\end{lstlisting}
+
+
+\chapter{Deepin系统维护与技巧}
+
+\section{开机进入命令行}
+\begin{lstlisting}
+开机进入命令行：sudo systemctl set-default multi-user
+恢复开机进桌面：sudo systemctl set-default graphical
+\end{lstlisting}
+
+\section{主目录被误删除的恢复方法}
+\begin{lstlisting}
+例如用户名是user，主目录/home/user，如果不小心把/home/user删除了，就会导致无法进入DDE桌面，但可以进shell。
+Ctrl+Alt+F2，进入tty2并登陆后，重新创建主目录并设置为当前用户所有：
+sudo mkdir /home/user
+sudo chown user:user /home/user
+reboot重启。
+\end{lstlisting}
+
+\section{与Windows系统时间同步}
+\begin{lstlisting}
+设置时区：sudo timedatectl set-timezone Asia/Shanghai
+启用本地时间：sudo timedatectl set-local-rtc 1 --adjust-system-clock
+把本地时间写入主板：sudo hwclock --localtime --systohc
+网络同步：sudo timedatectl set-ntp 1
+查询：timedatectl status
+如果想改回UTC时间，可以：sudo timedatectl set-local-rtc 0
+把UTC时间写入主板：sudo hwclock --utc --systohc
+或者：
+sudo apt install ntpdate #安装同步时间软件
+sudo ntpdate-debian #网络时间同步
+\end{lstlisting}
+
+\section{删除不需要的旧内核}
+\begin{lstlisting}
+查询所有内核：dpkg --get-selections |grep linux
+正在使用的内核不能删除：uname -r
+删除不需要的内核：sudo apt purge XXX
+\end{lstlisting}
+
+\section{清除已卸载软件遗留配置}
+\begin{lstlisting}
+dpkg --get-selections |grep deinstall | sed 's/deinstall/\lpurge/' | sudo dpkg --set-selections; sudo dpkg -Pa
+\end{lstlisting}
+
+\section{假死后安全重启系统}
+\begin{lstlisting}
+Alt+SysRq+R-E-I-S-U-B，按住Alt+SysRq后再按顺序按一次后面六个字母。
+可实现安全重启，其中SysRq就是Print Screen键。
+REISUB可以按BUSY的比较级BUSIER倒写来记。
+注意有Fn功能键的，视配置可能需要同时按住Fn功能键。
+感谢bbs.deepin.org社区 @funtoo 指导：
+R-从X11那里夺回键盘控制权
+E-向所有进程发送SIGTERM信号
+I-向所有进程发送SIGKILL信号
+S-把待写入硬盘的数据同步到硬盘
+U-将所有分区挂载为只读模式
+B-重新启动
+如果只是简单粗暴Alt+SysRq+B，有可能导致数据丢失等问题。
+\end{lstlisting}
+
+\section{进程相关命令}
+\begin{lstlisting}
+pgrep XXX #查询进程ID
+ps -ef |grep XXX #显示所有进程信息，连同命令行
+ps -aux |grep XXX #列出目前所有的正在内存当中的程序
+可以用 | 管道和 more 连接起来分页查看：ps -aux |more
+sudo netstat -tulpn |grep :21 #查询端口
+pkill XXX #杀掉
+killall XXX #全杀
+\end{lstlisting}
+
+\section{查看与同步GPT分区UUID}
+\begin{lstlisting}
+查看UUID方法一：blkid
+查看UUID方法二：ls -l /dev/disk/by-uuid
+查看UUID方法三：lsblk -f
+同步：sudo nano /etc/fstab
+\end{lstlisting}
+
+\section{修改分区UUID}
+\begin{lstlisting}
+sudo tune2fs -U c1b9d5a2-f162-11cf-9ece-0020afc76f16 /dev/sda5
+sudo tune2fs -U random /dev/sda5
+swap分区只能在LIVE环境通过mkswap -U修改。
+\end{lstlisting}
+
+\section{sfdisk创建磁盘GPT分区}
+\begin{lstlisting}
+命令：sfdisk /dev/sdX
+其中X为你要操作的硬盘编号，例如a，对应/dev/sda
+输入命令help可看到分区示例：“,200m”，表示创建第一个分区，大小200MB。
+继续输入创建分区命令“,8g”并回车确认，可创建大小为8GB的第二个分区。
+利用磁盘剩余空间创建最后一个分区时，只需输入逗号“,”并回车即可。
+\end{lstlisting}
+
+\section{修改磁盘卷标}
+\begin{lstlisting}
+打开分区编辑器(GParted)软件，可以在磁盘格式化时设置所有支持格式的卷标。
+如果不需要格式化，则可以先从“计算机”页面卸载目标分区，然后分区右键“重命名”，或者通过“分区 - Label File System”完成卷标设定。
+对于不支持GParted格式化的分区，例如exfat，可以通过命令行来设定：
+sudo exfatlabel /dev/sdc1 USB
+各种磁盘格式的卷标对应的修改命令如下：
+# mlabel or fatlabel for fat32
+# ntfslabel for ntfs
+# exfatlabel for exFAT
+# e2label for ext2/ext3/ext4
+# btrfs for BTRFS
+\end{lstlisting}
+
+\section{跨平台可读写文件系统exfat的格式化}
+\begin{lstlisting}
+首先，通过“分区编辑器(GParted)”右键卸载相应分区后为U盘创建GPT分区表，然后创建两个fat32主分区并应用。
+其次，需要用sudo fdisk -l查看磁盘或者分区信息，例如：
+Disk /dev/sdb: 28.7 GiB, 30752000000 bytes, 60062500 sectors
+...
+Device        Start      End  Sectors  Size Type
+/dev/sdb1      2048 59447295 59445248 28.4G Microsoft basic data
+/dev/sdb2  59447296 60061695   614400  300M Microsoft basic data
+建议把第一个分区sdb1格式化成exfat格式，以便在Windows、macOS和Linux都可以支持大文件读写。
+建议把第二个分区sdb2分区作为EFI引导分区，大小300MB即可，将来做启动盘使用。
+最后，将第一分区sdb1格式化成exfat磁盘格式：
+sudo mkfs.exfat /dev/sdb1 -n USB
+注意1：sdb1中的b和1因磁盘和分区数量不同而异，不要照搬，实际运用时需要酌情变更。
+注意2：如果将整个U盘格式化为exfat格式，则可以：
+sudo mkfs.exfat /dev/sdb
+\end{lstlisting}
+
+\section{修改系统运行级别}
+\begin{lstlisting}
+当前级别查看：runlevel
+0 系统停机模式，系统默认运行级别不能设置为0，否则不能正常启动，机器关闭。
+1 单用户模式，root权限，用于系统维护，禁止远程登陆，类似Windows下的安全模式登。
+2 多用户模式，没有NFS网络支持。
+3 完整的多用户文本模式，有NFS，登陆后进入控制台命令行模式。
+4 系统未使用，保留一般不用。
+5 图形化模式，登陆后进入图形界面。
+6 重启模式，默认运行级别不能设为6，否则不能正常启动。运行init 6机器就会重启。
+更改运行级别：
+sudo init 3
+\end{lstlisting}
+
+\section{离线安装软件}
+\begin{lstlisting}
+当没有网络连接的电脑上需要安装某个软件时，可以使用下面的脚本下载该软件以及依赖包，在脱机电脑上执行：sudo dpkg -i *.deb
+如果上述安装命令最后报错，则需要执行：sudo apt install -f
+如果提示缺少软件包（依赖），则拷贝依赖包名（例如XXX），在有网络的电脑上执行
+apt download XXX下载，再拷贝到脱机电脑上双击安装即可。
+批量下载脚本如下：
+#! /bin/bash
+pkg="$*"
+function getDepends()
+{
+  ret=`apt-cache depends $1 |grep -i 依赖 |sed 's/(.*)//' |cut -d: -f2`
+  if [[ -z $ret ]]; then
+    echo "$1 No depends"
+    echo -n
+  else
+#     echo $ret
+#     apt-cache depends $1 |grep -i 依赖
+#     echo ''
+    for i in $ret
+    do
+      if [[ `echo $pkg |grep -e "$i "` ]]; then
+#         echo "$i already in set"
+        echo -n
+      elif [[ $i =~ '<' ]]; then
+          echo "Drop $i"
+      elif [[ "$i" != "libc6" &&
+              "$i" != "libcairo2" &&
+              !("$i" =~ "glib") &&
+              !("$i" =~ "gtk") &&
+              !("$i" =~ "font")
+           ]]; then
+#         echo "Download $i ing"
+        pkg="$pkg $i"
+        getDepends $i
+      fi
+    done
+  fi
+}
+
+for j in $@
+do
+  getDepends $j
+done
+
+apt download $pkg -d -y
+\end{lstlisting}
+
+\section{升级操作系统内核}
+\begin{lstlisting}
+在Linux使用过程中，由于系统自带内核版本太老，或者存在一定程度的硬件支持缺陷，用户往往会遇到诸如无线网卡信号不佳、网络连接不稳定、硬件设备无法识别和使用等问题。
+如果您遇到了这些问题，可能就需要安装使用新版本内核来进行排查。
+尽管新内核有可能解决部分硬件兼容问题，但是也有很大几率导致现有的闭源驱动无法正常使用。
+请只有在当涉及硬件驱动问题而走投无路的时候，才更换内核。
+Linux内核和上层应用的耦合程度较低，所以一般不同发行版的内核可以通用。经测试，Ubuntu的内核可以直接拿来给Deepin使用：
+https://kernel.ubuntu.com/~kernel-ppa/mainline/
+寻找你想使用的内核版本，例如5.4.28：
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.28/
+一般只下载带"all"和"generic"字样的包，例如：
+linux-headers-5.4.28-050428_5.4.28-050428.202003250833_all.deb
+linux-headers-5.4.28-050428-generic_5.4.28-050428.202003250833_amd64.deb
+linux-image-unsigned-5.4.28-050428-generic_5.4.28-050428.202003250833_amd64.deb
+linux-modules-5.4.28-050428-generic_5.4.28-050428.202003250833_amd64.deb
+单独放在一个目录中，终端下执行：
+sudo dpkg -i *.deb
+重启，然后选择新内核引导项即可。
+\end{lstlisting}
+
+\section{自行编译内核}
+\begin{lstlisting}
+一般只在需要自行调整内核编译参数时，才需要自己编译内核。这是个费时又费力的活。
+1. 安装必备工具和依赖：sudo apt install build-essential fakeroot bison flex libssl-dev libncurses5-dev
+2. 下载内核源码：https://www.kernel.org/ ，选择版本，下载后右键“解压到当前文件夹”。
+3. 进入源码所在目录，右键“在终端中打开”，拷贝旧配置文件：cp /boot/config-`uname -r`* .config
+4. 基于当前系统内核配置文件生成新内核配置文件：make olddefconfig
+5. 调整内核编译参数，除非你清楚选项的作用，否则请忽略：make menuconfig
+6. 多核编译：make deb-pkg -j $(echo $(nproc)-1|bc)
+7. 编译完成后，会在源码的上一级目录中生成deb安装文件，sudo dpkg -i *.deb 安装即可。
+注意：
+1. 如果想修改参数再重新编译，建议执行”make mrproper“清理一下
+2. 上述第四步不建议使用默认配置：make defconfig
+3. 推荐阅读：https://www.jianshu.com/p/9fbdfd919fc0
+\end{lstlisting}
+
+\section{重置所有用户配置}
+\begin{lstlisting}
+该方法仅当出现疑难杂症无法解决时，才考虑采取的不得已的手段，可以将所有用户配置重置，但也会丢失主目录下所有的资料。请在使用该方法前，一定要备份好主目录。这时就体现了存在一个自动挂载的数据盘的重要性了。
+方法是在终端执行命令：sudo init 3
+系统重启后，会进入shell，登陆。比如用户名是user，则主目录是/home/user。
+那么先手动删除主目录：sudo rm -rf /home/user
+再重建主目录并获取所有权：
+sudo mkdir /home/user
+sudo chown user:user /home/user
+重启reboot就行了。
+注意：请务必替换上面命令的user为你当前系统正在使用的用户名。
+注意：请一定要先备份好主目录的资料，否则找不回！
+\end{lstlisting}
+
+\section{终端Ctrl+R执行历史命令}
+\begin{lstlisting}
+当在终端执行一些常用命令时，比较高效的做法是调用历史命令。执行快捷键Ctrl+R，输入需要执行命令的一部分，找到需要的命令后，回车执行。
+查看更多的历史命令：history 「所有历史命令都保存在~/.bash_history中」
+\end{lstlisting}
+
+\section{更换用户名及家目录}
+\begin{lstlisting}
+终端执行sudo init 3进入shell，并以root账户登陆，之后执行：
+usermod -l new_username -d /home/new_username -m old_username
+groupmod -n new_username old_username
+\end{lstlisting}
+
+\section{配置命令行默认Python版本}
+\begin{lstlisting}
+不推荐，可能导致某些依赖python的软件出现问题！在此仅作为示例，介绍update-alternatives的基本用法。
+首先需要在系统中添加Python2.7、Python3.5的选项，默认为Python3.5（优先级20）
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 10
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.5 20
+显示：update-alternatives --display python
+切换：sudo update-alternatives --config python
+\end{lstlisting}
+
+\section{软件包管理技巧}
+
+\subsection{禁止某软件包升级}
+\begin{lstlisting}
+echo "XXX hold" | sudo dpkg --set-selections
+apt-mark hold XXX
+\end{lstlisting}
+
+\subsection{允许某软件包升级}
+\begin{lstlisting}
+echo "XXX install" | sudo dpkg --set-selections
+sudo apt-mark unhold XXX
+\end{lstlisting}
+
+\subsection{修正dpkg -i *.deb安装后缺少依赖}
+\begin{lstlisting}
+sudo apt install -f
+\end{lstlisting}
+
+\subsection{强制清除}
+\begin{lstlisting}
+sudo dpkg --purge --force-all XXX
+\end{lstlisting}
+
+\section{从源码编译安装软件包}
+
+\subsection{通过源码编译升级软件包}
+\begin{lstlisting}
+1. 安装公钥：sudo apt install debian-keyring #开发者公钥
+2. 安装依赖：sudo apt build-dep XXX
+3. 下载源码：apt source XXX
+4. 替换源码或修改源码
+5. 重新编译：cd 源码目录 && dpkg-buildpackage -rfakeroot -uc -b
+6. 覆盖安装：sudo dpkg -i *.deb
+第5步执行之前，可能需要先安装制作工具：sudo apt install fakeroot dh-make
+\end{lstlisting}
+
+\subsection{基于源码编译Shadowsocks-Qt5}
+\begin{lstlisting}
+1. 安装依赖
+sudo apt install --no-install-recommends debhelper pkg-config qt5-qmake qtbase5-dev libbotan1.10-dev libqrencode-dev libzbar-dev libappindicator-dev
+sudo apt install debhelper pkg-config qt5-qmake qtbase5-dev
+2. 编译安装：https://github.com/shadowsocks/libQtShadowsocks
+export PATH="/usr/lib/x86_64-linux-gnu/qt5/bin:$PATH"
+dpkg-buildpackage -uc -us -b
+sudo dpkg -i ../libqtshadowsocks*.deb ../shadowsocks-libqtshadowsocks*.deb
+3.编译安装：https://github.com/shadowsocks/shadowsocks-qt5
+export PATH="/usr/lib/x86_64-linux-gnu/qt5/bin:$PATH"
+dpkg-buildpackage -uc -us -b
+sudo dpkg -i ../shadowsocks-qt5*.deb
+\end{lstlisting}
+
+\section{文件或目录权限管理}
+\begin{lstlisting}
+点击文件或者目录右键菜单项”属性“，可在”权限管理“中分配特定权限。也可命令设定：
+chmod 755 XXX
+mode的三个数字，分别表示owner,group,others所具备的权限。
+1＝x 执行，2＝w 写，4＝r 读
+比如owner具有所有权限：1+2+4=7，而 group 具有读和执行权限：1+4=5。
+命令ls -l可查看权限。
+\end{lstlisting}
+
+\section{VirtualBox虚拟机减肥}
+\begin{lstlisting}
+1.关闭虚拟机休眠功能：powercfg /h off
+2.关闭系统还原
+3.磁盘碎片整理
+4.下载sdelete，执行：sdelete -c -z C: D:
+5.关闭虚拟机
+6.VBoxManage modifyhd --compact WIN7.vdi
+\end{lstlisting}
+
+\section{安装TeXLive最新版}
+\begin{lstlisting}
+官网下载网络安装程序：http://tug.org/texlive/acquire-netinstall.html
+精简安装: sudo apt install perl-tk && ./install-tl gui
+安装选项：方案选择“small scheme”，便携安装并指定路径，选项默认A4纸，“创建所有格式文件”选“是”，其余全部选“否”。
+扩展宏包: tlmgr install exam xpatch titlesec zhnumber everypage subfigure tcolorbox environ trimspaces wrapfig draftwatermark synctex latexindent silence letltxmacro
+中文宏集: tlmgr install ctex
+免费字体：tlmgr install fandol
+移除: tlmgr remove XXX
+更新: tlmgr update --all
+搜索: tlmgr search --global --file XXX
+\end{lstlisting}
+
+\section{支持多架构：64位系统安装32位软件}
+\begin{lstlisting}
+sudo dpkg --add-architecture i386
+sudo apt update
+sudo apt install XXX:i386
+\end{lstlisting}
+
+\section{Backports新版本软件安装}
+\begin{lstlisting}
+Deepin基于Debian 9,部分软件比较老旧，但可以通过添加Debian Backports源，来安装部分软件的新版本。
+参考网址：http://backports.debian.org/Instructions/
+终端执行：sudo nano /etc/apt/sources.list.d/backports.list
+添加内容：deb http://deb.debian.org/debian stretch-backports main
+安装方法：sudo apt -t stretch-backports install "package"
+更新列表：http://backports.debian.org/changes/stretch-backports.html
+\end{lstlisting}
+
+\section{Git导出Windows行尾源码}
+\begin{lstlisting}
+修改.git/config，添加：
+[core]
+	autocrlf = true
+	eol = crlf
+导出：
+git archive -o export.zip HEAD
+\end{lstlisting}
+
+\section{架设TFTP服务器}
+\begin{lstlisting}
+交换机、防火墙、路由器经常有网络备份配置、恢复配置的需求，这需要借助TFTP完成。
+安装TFTP简易服务器：sudo apt install tftpd-hpa
+配置：sudo nano /etc/default/tftpd-hpa
+TFTP_USERNAME="<用户名>"
+TFTP_DIRECTORY="/home/<用户名>"
+TFTP_ADDRESS="0.0.0.0:69"
+TFTP_OPTIONS="-l -c -s"
+需要替换当前登陆的用户名，不可简单复制粘贴。
+\end{lstlisting}
+
+\section{安装字体查看器}
+\begin{lstlisting}
+目前Deepin系统双击字体文件默认打开“字体安装器”，而无法查看字体详细信息。
+建议安装字体查看器解决：sudo apt install gnome-font-viewer
+\end{lstlisting}
+
+\section{nmap端口扫描}
+\begin{lstlisting}
+建议：sudo apt install nmap
+例如扫描指定UDP端口：sudo nmap -p 9902 -sU 10.35.99.100
+反馈举例：9902/udp open|filtered unknown
+扫描TCP端口举例：sudo nmap -p 9903 -sT 10.35.99.100
+\end{lstlisting}
+
+\section{dns和arp常用命令}
+\begin{lstlisting}
+查询DNS：nslookup deepin.org
+查询ARP：arp 或 cat /proc/net/arp
+BSD风格显示：arp -a
+清除arp缓存：sudo ip -s -s neigh flush all
+\end{lstlisting}
+
+\section{chroot切换后访问网络}
+\begin{lstlisting}
+以chroot /mnt为例，执行该命令后，可能会发现无法通过域名访问网络，原因是DNS解析服务器不存在。
+解决方法：在执行chroot命令前，拷贝Live的DNS解析。
+即：sudo cp /etc/resolv.conf /mnt/etc/resolv.conf
+\end{lstlisting}
+
+\section{tty文本模式连接wifi}
+\begin{lstlisting}
+作者：一本正经的胡说八道（QQ：1534646530）
+Ctrl+Alt+F2进入tty2或sudo init 3进入文本模式，执行以下操作实现在终端连接wifi。
+sudo NetworkManager start #确认NetworkManager服务开启
+nmcli device wifi list #查看可连接的wifi列表
+nmcli device wifi connect wifi-name password wifi-password #连接wifi
+\end{lstlisting}
+
+\section{调整GPT磁盘分区顺序}
+\begin{lstlisting}
+GPT磁盘由于删减合并等，可能会导致分区设备数字错乱。
+sudo cfdisk /dev/sdX，选择Sort，然后Write，输入yes完成重新排序命名，重启生效。
+/dev/sdX视硬盘不同而修改，可sudo fdisk -l查看。
+\end{lstlisting}
+
+\section{修改SSH端口号}
+\begin{lstlisting}
+nano /etc/ssh/ssh_config
+默认端口为22,现修改成：Port 1979
+重启服务：service sshd restart
+连接：ssh -p 1979 root@qpsoft.com
+\end{lstlisting}
+
+\section{利用ssh登陆服务器}
+\begin{lstlisting}
+ssh root@qpsoft.com
+ssh -p 1979 root@qpsoft.com
+\end{lstlisting}
+
+\section{利用sshfs挂载主机文件系统}
+\begin{lstlisting}
+服务端：sudo apt install openssh-server #服务器默认已安装
+客户端：sudo apt install sshfs
+并加入fuse用户组：adduser <用户名> fuse
+挂载：sshfs root@qpsoft.com:/ ~/.server
+卸载：fusermount -u ~/.server
+\end{lstlisting}
+
+\section{scp在服务器和本地间传送文件}
+\begin{lstlisting}
+scp ~/somefile.tar.xz root@qpsoft.com:
+scp root@qpsoft.com:test.tar.xz .
+scp -r ~/somedirectory root@qpsoft.com:
+scp -P 1979 some.tar.xz root@qpsoft.com:
+\end{lstlisting}
+
+\section{开机出现Firmware Bug日志}
+\begin{lstlisting}
+错误日志内容：[Firmware Bug]: TSC_DEADLINE disabled due to Errata; please update microcode to version: 0x22 (or later)
+解决办法：sudo apt install intel-microcode 或 sudo apt install amd64-microcode
+检查安装：dmesg |grep microcode
+问题来源：https://stackoverflow.com/questions/48036877/debian-firmware-bug-tsc-deadline-disabled-due-to-errata
+应用这个补丁后，会降低CPU性能。家用不推荐。
+\end{lstlisting}
+
+\section{ShadowSocks代理上网}
+\begin{lstlisting}
+ShadowSocks软件自身配置完成后，还需要打开网络代理，配合VPS或者免费节点，才能科学上网（推荐：electron-ssr）。
+方法一：手动代理
+控制中心-网络-系统代理-手动：SOCKS代理“127.0.0.1”,端口“1080”。
+方法二：自动代理
+控制中心-网络-系统代理-自动：配置URL“file:///home/<用户名>/.ss.pac”
+sudo apt install python3-pip
+sudo pip3 install genpac
+genpac --pac-proxy "SOCKS5 127.0.0.1:1080" --gfwlist-proxy="SOCKS5 127.0.0.1:1080" --output=~/.ss.pac
+\end{lstlisting}
+
+\section{不重启切换终端与桌面}
+\begin{lstlisting}
+不重启切换到终端：sudo systemctl isolate multi-user.target
+从终端切换回桌面：sudo systemctl isolate graphical.target
+\end{lstlisting}
+
+\section{查询系统服务}
+\begin{lstlisting}
+分类查询：systemctl list-units --type service --all
+查询所有：systemctl list-unit-files
+\end{lstlisting}
+
+\section{查询服务依赖}
+\begin{lstlisting}
+查询指定目标：systemctl list-dependencies multi-user.target
+查询当前环境：systemctl list-dependencies
+反向查询依赖：systemctl list-dependencies multi-user.target --reverse
+\end{lstlisting}
+
+\section{创建服务延时执行命令}
+\begin{lstlisting}
+以下以创建一个执行1分钟后关闭错误报警蜂鸣声的服务为例，用到了at定时执行，需要提前安装延时服务：sudo apt install at
+说明：事实上，延时执行是没有必要的，仅以此为例，用户可尝试修改ExecStart的脚本。
+sudo dedit /etc/systemd/system/nobeep.service
+Requires=atd.service
+添加内容：
+[Unit]
+Description=Keep quiet when some error happens
+Requires=atd.service
+[Service]
+Type=simple
+ExecStart=/bin/bash -c "echo /sbin/rmmod pcspkr |at now + 1 minutes"
+[Install]
+WantedBy=multi-user.target
+启用自定义服务并测试判断：
+sudo systemctl enable nobeep.service
+systemctl list-dependencies nobeep.service --reverse
+sudo systemctl start nobeep.service
+systemctl status nobeep.service
+\end{lstlisting}
+
+
+\chapter{Deepin办公与生产力}
+
+\section{必备的WPS兼容字体包}
+\begin{lstlisting}
+默认Linux版本WPS打开公文报表时，由于字体缺失，会导致不兼容Windows平台样式，体现不出相同的展示效果。
+字体介绍地址：http://wps-community.org/download.html?vl=fonts#download
+字体下载地址：http://kdl.cc.ksosoft.com/wps-community/download/fonts/wps-office-fonts_1.0_all.deb
+双击安装即可。如下载失败，请加QQ群19346666，从群文件“字体”目录下载。
+\end{lstlisting}
+
+\section{PDF文件压缩}
+\begin{lstlisting}
+gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile=output.pdf input.pdf
+-dPDFSETTINGS=/screen 压缩比最大，输出文件最小，质量最低
+-dPDFSETTINGS=/ebook 压缩比稍小，输出文件较小，质量稍高
+-dPDFSETTINGS=/printer 高质量输出，文件较大
+也可以-dColorImageResolution=180调整图像DPI：
+gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dDownsampleColorImages=true -dColorImageResolution=130 -dNOPAUSE -dBATCH -sOutputFile=output.pdf input.pdf
+\end{lstlisting}
+
+\section{卸载搜狗输入法，改用Google拼音}
+\begin{lstlisting}
+由于搜狗输入法存在严重的内存泄露（开机大约8小时，内存占用将达到3G)，在官方修复内存泄露之前，建议替换成fcitx输入法。
+卸载搜狗输入法：sudo apt purge fcitx* sogou*
+完成卸载后，一定要注销或者重启。
+杀掉所有fcitx进程：killall fcitx
+确认这条命令没有任何输出了：pgrep fcitx
+删除旧配置「注意！每行命令只有-r前后有空格，如果不理解，请图形界面手动删除」：
+rm -r ~/.sogouinput
+rm -r ~/.config/SogouPY*
+rm -r ~/.config/sogou*
+rm -r ~/.config/fcitx*
+安装Google拼音输入法：
+sudo apt install fcitx-googlepinyin
+启动测试：
+fcitx-autostart
+如无报错，成功。
+深入了解fcitx安装情况：fcitx-diagnose
+\end{lstlisting}
+
+\section{安装中州韵fcitx-rime输入法}
+\begin{lstlisting}
+请卸载搜狗拼音输入法！为了避开奇怪问题，建议先彻底卸载fcitx和RIME输入法。
+sudo apt purge fcitx* *rime*
+sudo apt autoremove --purge
+尝试重启或者注销电脑，也可尝试杀掉所有fcitx进程：killall fcitx
+确认这条命令没有任何输出：pgrep fcitx
+删除旧配置「注意！该命令只有-r前后有空格，如果不理解，请图形界面手动删除」：
+rm -r ~/.config/fcitx
+其中~代表主目录。
+安装fcitx-rime：sudo apt install fcitx-rime
+测试：fcitx-autostart
+如果还无法使用中州韵，托盘输入法图标右键“配置”手动添加。
+Ctrl+Alt+P可切换内嵌编辑模式（PreeditStringInClientWindow=False）。
+下载配置、词库和皮肤：https://www.github.com/loaden/rime
+覆盖到 ~/.config/fcitx/rime 目录下，托盘输入法图标右键菜单“重新部署”。
+将 skin 目录移动到 ~/.config/fcitx 目录下可实现自定义皮肤。
+输入法配置快捷键：Ctrl+` 或 Ctrl+Shift+` 或 Ctrl+0 或 F4。
+常见用法详见：https://github.com/loaden/rime/blob/master/README.md
+更多用法需要参考配置文件（含custom的yaml）中的注释。
+\end{lstlisting}
+
+\section{安装中州韵rime-ibus输入法}
+\begin{lstlisting}
+请卸载搜狗拼音输入法！为了避开奇怪问题，建议先彻底卸载ibus和RIME输入法。
+sudo apt purge ibus* *rime*
+sudo apt autoremove --purge
+尝试重启或者注销电脑，也可尝试杀掉所有ibus进程：killall ibus
+确认这条命令没有任何输出：pgrep ibus
+删除旧配置「注意！该命令只有-r前后有空格，如果不理解，请图形界面手动删除」：
+rm -r ~/.config/ibus
+rm ~/.xinputrc
+其中~代表主目录。
+然后安装ibus-rime: sudo apt install ibus-rime
+测试：ibus-setup
+由于deepin对im-config的错误修改，导致无法启用ibus，解决办法：
+sudo rm -f /usr/share/im-config/data/21_ibus.*
+终端运行：im-config，“确定”后选择“Yes”手动指定用户设置，弹出窗口中选择ibus后确认，注销并重新登陆后，启动器搜索ibus或者托盘输入法图标打开“首选项”，在“输入法”页面添加RIME。
+下载配置、词库：https://www.github.com/loaden/rime ,覆盖到 ~/.config/ibus/rime 目录下，托盘输入法图标左键单击菜单“部署”或右键“重新启动”。ibus-rime在非GNOME桌面下，无法自定义皮肤，候选窗口左侧存在丑陋拖动条，底部出现多余上、下箭头。如果你知道怎么解决这个问题，请不吝赐教。
+建议在“iBus首选项 - 常规”里关掉“在应用程序窗口中启用内嵌编辑模式”，在“高级”里关闭“在所有应用程序中共享同一个输入法”。如果找不到“iBus首选项”，可在终端执行：ibus-setup
+\end{lstlisting}
+
+\section{输入法无法开机自启动}
+\begin{lstlisting}
+第1步：建议终端命令fcitx-diagnose检查有无异常报错。
+第2步：建议终端命令im-config，“确定”后选择“Yes”手动指定用户设置，弹出窗口中选择fcitx或者ibus后确认。
+检查生成的配置文件：cat ~/.xinputrc 并确认配置文件生成时间和所自启动的输入法是否正确。
+注销并重新登陆。
+第3步：如果仍然无法自启动，则可以针对fcitx输入法框架尝试终端命令：
+echo -e "export GTK_IM_MODULE=fcitx\nexport XMODIFIERS=@im=fcitx\nexport QT_IM_MODULE=fcitx" > ~/.xprofile
+针对ibus输入法框架尝试终端命令：
+echo -e "export GTK_IM_MODULE=ibus\nexport XMODIFIERS=@im=ibus\nexport QT_IM_MODULE=ibus" > ~/.xprofile
+然后重复第1步和第2步，注销后重新登陆。
+如果仍然无法开机启动输入法，请重新安装im-config：sudo apt install im-config --reinstall
+然后重复第2步，注销后重新登陆。
+\end{lstlisting}
+
+\section{解决中州韵偶尔无法输入中文}
+\begin{lstlisting}
+中州韵会偶尔出现无法输入中文的现象，之前只能重启输入法才能解决。
+最新发现，只要Ctrl+` 或 Ctrl+Shift+` 切换一下输入法，比如我从“五笔86”切换到“五笔拼音”即可解决。
+\end{lstlisting}
+
+\section{搜狗输入法解决内存泄露}
+\begin{lstlisting}
+搜狗输入法2.3.1版本已经解决了内存泄露问题，喜欢搜狗输入法的朋友，只需要从官方下载安装包更新：
+https://pinyin.sogou.com/linux/?r=pinyin
+因皮肤不兼容，建议卸载自带的五笔拼音：sudo apt purge fcitx-table-wbpy
+安装完成后注销系统，重新登陆即可。
+\end{lstlisting}
+
+\section{Blender视频剪辑多核渲染插件}
+\begin{lstlisting}
+Blender 2.81a 版本视频剪辑功能已经非常强大，然而默认单核渲染，速度极慢是硬伤。通过安装ktba插件可支持多核渲染，极大的提高了视频渲染速度。
+插件地址：https://github.com/elmopl/ktba
+使用帮助：https://github.com/elmopl/ktba/wiki/Addons
+\end{lstlisting}
+
+\section{Blender视频剪辑多核渲染崩溃处置}
+\begin{lstlisting}
+Blender视频剪辑多核渲染崩溃的解决方案：可以尝试取消Mixsound Sound选项，也可以使用脚本手动连接与合并。
+方法一：直接将包含音频的视频连接，详见群文件concat_contails_audio.sh，内容如下：
+#!/bin/bash
+for file in `find . -type f -a -name '*-*.mp4'`
+do
+  buf=$buf"file '${file:2}'\n"
+done
+echo -e $buf |sed "/^$/d" |sort -t "-" -k 2n > in.txt
+ffmpeg -f concat -i in.txt -c copy out.mp4
+
+方法二：
+先从Blender里渲染音频，例如in.mp3（如果是其它格式音频，需要修改脚本），它的原理是先连接视频(丢弃音频），然后再把单独渲染的音频与之合并。
+将方法一脚本的最后一条命令替换成：
+ffmpeg -f concat -i in.txt -c:v copy -an in.mp4
+ffmpeg -i in.mp4 -i in.mp3 -c:v copy -c:a copy out.mp4
+rm in.mp4
+详见群文件concat_merge_audio.sh。
+\end{lstlisting}
+
+\section{ffmpeg音频视频编码}
+
+\subsection{ffmpeg视频转换}
+\begin{lstlisting}
+ffmpeg -i input.mp4 -s:v 1280x720 -b:v 2000k -r:v 25 -c:v h264 -c:a ac3 -b:a 128k -r:a 44100 -ac 2 output.mp4
+:v视频参数，:a音频参数，-ac声道。
+\end{lstlisting}
+
+\subsection{批量编码转换}
+\begin{lstlisting}
+安装影音转换工具：sudo apt install ffmpeg
+创建运行脚本：touch conv.sh
+右键设置可执行权限，或者：chmod +x conv.sh
+用编辑器打开conv.sh，添加以下内容（参数可酌情修改）:
+#!/bin/bash
+for file in `find . -type f -a -name '*.mov'`
+do
+    ffmpeg -i "$file" -c:v h264 -b:v 3000k -r:v 25 -c:a ac3 -b:a 192k -r:a 44100 -ac 2 "$(expr "$file" : '\(.*\)\.mov').mp4";
+    [ "x$?x" == "x0x" ] && rm "$file"
+done
+\end{lstlisting}
+
+\subsection{ffmpeg视频连接}
+\begin{lstlisting}
+将需要连接的视频文件名根据自己需要的顺序放在in.txt文件中，每个文件一行：
+file '0390-3917.mp4'
+file '3918-7446.mp4'
+连接视频和音频：ffmpeg -f concat -i in.txt -c copy out.mp4
+只连接视频，丢弃音频：ffmpeg -f concat -i in.txt -c:v copy -an out.mp4
+只连接音频，丢弃视频：ffmpeg -f concat -i in.txt -c:v none -c:a copy out.mp3
+\end{lstlisting}
+
+\subsection{ffmpeg提取音频}
+\begin{lstlisting}
+知道视频中的音频编码时：ffmpeg -i in.mp4 -c:v none -c:a copy out.mp3
+不知道编码，需要转换时：ffmpeg -i in.mp4 -c:v none -c:a ac3 -b:a 128k -r:a 44100 -ac 2 out.ac3
+\end{lstlisting}
+
+\subsection{ffmpeg视频混合音频}
+\begin{lstlisting}
+ffmpeg -i in.mp4 -i in.mp3 -c:v copy -c:a copy out.mp4
+或简化成：ffmpeg -i in.mp4 -i in.mp3 -c copy out.mp4
+in.mp4中的视频和音频与in.mp3中的音频混合输出。
+\end{lstlisting}
+
+\subsection{ffmpeg视频合并音频}
+\begin{lstlisting}
+ffmpeg -i in.mp4 -i in.mp3 -c copy -map 0:v -map 1:a out.mp4
+in.mp4中的视频与in.mp3中的音频合并。
+\end{lstlisting}
+
+\subsection{ffmpeg截取视频}
+\begin{lstlisting}
+ffmpeg -i in.mp4 -to 5 -c copy out.mp4 #截取开头至第5秒
+ffmpeg -i in.mp4 -ss 10 -c copy out.mp4 #截取第10秒至结束
+ffmpeg -i in.mp4 -ss 6 -to 9 -c copy out.mp4 #截取第6秒至第9秒
+ffmpeg -i in.mp4 -ss 8 -t 5 -c copy out.mp4 #从第8秒开始截取5秒
+ffmpeg为了加速，会使用关键帧技术，所以有时剪切出来的结果在起止时间上未必准确。通常来说，把-ss选项放在-i之前，会使用关键帧技术；把-ss选项放在-i之后，则不使用关键帧技术。如果要使用关键帧技术又要保留时间戳，可以加上-copyts选项：
+ffmpeg -ss 00:01:00 -i in.mp4 -to 00:02:00 -c copy -copyts cut.mp4
+\end{lstlisting}
+
+\subsection{ffmpeg指定时间合并}
+\begin{lstlisting}
+ffmpeg -ss 00:10:01 -t 30 -i in.mp4 -ss 00:05:02 -t 30 -i in.mp3 -c copy -map 0:v -map 1:a out.mp4
+in.mp4中第10分1秒开始的30秒视频与in.mp3中第5分2秒开始的30秒音频合并。
+\end{lstlisting}
+
+\subsection{ffmpeg调整播放速度}
+\begin{lstlisting}
+声音视频同时调节：ffmpeg -i in.mp4 -filter_complex -r 25 "[0:v]setpts=1.25*PTS[v];[0:a]atempo=0.8[a]" -map "[v]" -map "[a]" out.mp4
+只调节视频：ffmpeg -i in.mp4 -an -filter:v -r 25 "setpts=0.8*PTS" out.mp4
+只调节音频：ffmpeg -i in.mp3 -filter:a "atempo=1.25" -vn out.mp3
+\end{lstlisting}
+
+
+\chapter{Deepin启动与多系统}
+
+\section{开机画面卡死卡桌面或者黑屏}
+\begin{lstlisting}
+grub引导菜单界面，按e进入编辑模式（MBR磁盘按Tab键），修改“splash quiet”所在行，在quiet之后添加：nouveau.modeset=0 或 nomodeset
+或 nouveau.modeset=0 acpi_osi=! acpi="windows 2009"
+或 nomodeset acpi_osi=! acpi="windows 2009"
+注意添加上述参数时，前后留空格。按下F10应用新参数启动。
+acpi="windows 2009"原理：据说是因为有些老旧的BIOS无法识别高版本的Linux内核，所以grub加上这个参数就可以欺骗BIOS让它以为系统是windows7，然后就可以正常启动了。
+如果还无法成功，可以尝试以下参数彻底禁掉nouveau开源驱动：
+rd.driver.blacklist=nouveau modprobe.blacklist=nouveau nvidia-drm.modeset=1
+如果安装完成后相同参数引导卡LOGO，则可以尝试Ctrl+Alt+F2进入tty2终端安装显卡驱动。
+如果无法进入tty2，请使用内核参数 systemd.unit=multi-user.target 进 shell，之后参考“硬件与驱动”章节在终端安装显卡驱动。
+内核参数：https://wiki.archlinux.org/index.php/Kernel_parameters
+\end{lstlisting}
+
+\section{启动后桌面空白，任务栏消失}
+\begin{lstlisting}
+安装完成后登陆系统，发现桌面只能看见壁纸，看不到任务栏。此时按下组合键Ctrl+Alt+T应该可以显示终端。
+判断当前分辨率是否正确：xrandr --curent
+如果不正确，可以手动修改：xrandr -s 1920x1080
+注意1920x1080之间的字母是英文xyz中的小写x，而不是乘号。
+如仍然无法解决，尝试启动时加内核参数acpi=off
+\end{lstlisting}
+如果问题依然无法解决，请参考\ref{section:dock_disappear}章节。
+
+\section{系统启动分析}
+\begin{lstlisting}
+显示启动系统过程中用户态和内核态所花的时间：systemd-analyze
+显示每个启动项所花费的时间明细：systemd-analyze blame
+\end{lstlisting}
+
+\section{检查启动失败服务}
+\begin{lstlisting}
+安装新内核后可能出现systemd-modules-load.service加载失败，导致启动延时，原因是深度开发的warm-sched延时加载功能的依赖驱动mincores在升级内核时编译失败。
+可以用该命令检查启动失败的服务：
+sudo systemctl --failed
+\end{lstlisting}
+
+\section{查看开机日志}
+\begin{lstlisting}
+首先使用systemd-analyze和systemd-analyze blame命令，对开机有个大致评估。
+然后查看详细的启动日志：
+sudo journalctl /usr/lib/systemd/systemd -b
+sudo journalctl /usr/lib/deepin-daemon/dde-session-daemon -b
+最后查看启动过程中内核与硬件相关信息：
+查看错误级别日志：sudo dmesg --level err
+查看警告级别日志：sudo dmesg --level warn
+更多级别或用法：dmesg --help
+\end{lstlisting}
+
+\section{了解用户登陆情况}
+\begin{lstlisting}
+显示当前在本地系统上的所有用户的信息：
+who 以及 whoami
+列出目前与过去登入系统的用户相关信息:
+last 以及 lastlog
+\end{lstlisting}
+
+\section{利用系统安装盘进Live模式}
+\begin{lstlisting}
+插入烧录了Deepin系统的启动U盘，在启动菜单第一项“Install Deepin”高亮时按 e 进入引导参数编辑状态。
+将引导参数中的“livecd-installer”删除，F10启动即可进入Live桌面。
+注意：由于没有闭源显卡驱动支持，进Live桌面后请仅限于系统维护、资料备份或GRUB引导修复。要想体验优秀的DDE桌面环境，请实机安装。
+\end{lstlisting}
+
+\section{Live模式修复GRUB引导}
+\begin{lstlisting}
+进入Live模式后打开终端，或者安装盘进入安装界面时，Ctrl+Alt+F2进入tty2，先执行“lsblk -f”找到系统安装分区sdaX，按顺序执行：
+mount /dev/sdaX /mnt
+mount /dev/sdaY /mnt/boot/efi
+mount --bind /dev /mnt/dev
+mount --bind /proc /mnt/proc
+mount --bind /sys /mnt/sys
+chroot /mnt
+grub-install /dev/sda
+update-grub
+exit
+sdaY为efi分区，MBR磁盘可忽略此步骤。重要：不同硬盘请酌情替换sda及X/Y。
+注意：UEFI启动方式由于存在EFI分区，可以直接执行grub-install。
+\end{lstlisting}
+
+\section{GRUB维护技巧}
+
+\subsection{设置默认系统为用户选择}
+\begin{lstlisting}
+如果安装多系统，我们会有重启或开机时仍然进入上一次我们所选定系统的需求。
+sudo nano /etc/default/grub
+添加：
+GRUB_DEFAULT=saved
+GRUB_SAVEDEFAULT=true
+更新：
+sudo update-grub
+\end{lstlisting}
+
+\subsection{隐藏启动菜单}
+\begin{lstlisting}
+sudo nano /etc/default/grub
+添加：
+GRUB_HIDDEN_TIMEOUT=1
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+修改：
+GRUB_TIMEOUT=0
+更新：
+sudo update-grub
+长按Shift可以显示被隐藏的GRUB启动菜单，如果无效，可以开机长按ESC，进入grub命令行后输入normal回车，然后再次按下ESC。
+\end{lstlisting}
+
+\section{禁止GRUB检测其它系统}
+\begin{lstlisting}
+当配合第三方引导程序，例如Clover时，由于第三方引导界面已经展示了各系统的入口，所以GRUB中没必要再保留其它系统入口了。
+sudo apt purge os-prober
+sudo rm -r /var/lib/os-prober/
+sudo update-grub
+\end{lstlisting}
+
+\section{屏蔽开关机屏幕日志}
+\begin{lstlisting}
+sudo nano /etc/default/grub
+添加loglevel=2内核启动参数，例如：GRUB_CMDLINE_LINUX="loglevel=2"
+更新：sudo update-grub
+该参数只是设置在屏幕上打印的内核日志级别，并不影响内核日志的记录。可用如下命令查看：dmesg --level 3
+详见：dmesg --help
+\end{lstlisting}
+
+\section{开机关机巨大LOGO}
+\begin{lstlisting}
+安装Nvidia专有驱动后，很有可能会导致开机时，GRUB无法获取正确的分辨率。
+sudo nano /etc/default/grub
+添加：GRUB_GFXPAYLOAD_LINUX=keep
+更新：sudo update-grub
+如果GRUB2菜单分辨率仍然不正确，可尝试升级GRUB。
+\end{lstlisting}
+
+\section{修正启动或关机界面分辨率}
+\begin{lstlisting}
+安装显卡专有驱动后，很有可能会出现开机时无法读取正确的分辨率，从而导致的巨大开机LOGO。解决办法：
+sudo nano /etc/default/grub
+设置正确分辨率：
+GRUB_GFXMODE=1920x1080
+GRUB_GFXPAYLOAD_LINUX=keep
+更新：
+sudo update-grub
+\end{lstlisting}
+
+\section{Ventoy制作多系统启动盘}
+\begin{lstlisting}
+Ventoy可以实现在一个U盘上引导所有主流Linux系统、Windows系统进入安装程序，支持部分PE。启动盘制作完成后，只需要将系统ISO镜像拷贝到U盘即可，支持Lagecy和UEFI两种方式引导。该软件有Windows和Linux两个版本，简单易用。
+Windows 7系统需要使用在原版镜像基础上集成微软官方USB3.0内核补丁和官方EFI引导程序的修改版：https://pan.baidu.com/s/1D0ATxmhsbLtTH92-f9SgaQ 密码: oljr
+强烈推荐这个国人开发的开源软件：http://www.ventoy.net
+\end{lstlisting}
+
+\section{Win10 USB启动盘制作}
+\begin{lstlisting}
+如果是Win10 LTSC，则只需将U盘用GPT分区表格式化成FAT32，然后在ISO镜像文件上右键“打开方式”，选择“磁盘映像挂载器”。挂载成功后，将ISO磁盘内所有文件拷贝到U盘就可以引导安装Win10了。
+当然，在应用商店安装WoeUSB，也可以在图像界面下轻松制作Windows启动U盘。
+如果是Win10 Business版本，由于FAT32格式文件大小4G限制，只能用WoeUSB在命令行下制作Win10 USB启动盘：
+sudo woeusb --target-filesystem NTFS --device cn_windows_10_business_editions_version_1903.iso /dev/sdb
+其中/dev/sdb通过sudo fdisk -l查询得到。
+注意：无论是WoeUSB图形界面还是命令行操作，都需要先用“分区编辑器”把U盘卸载。
+\end{lstlisting}
+
+\section{安装Deepin与Windows双系统}
+\begin{lstlisting}
+情况一：如果是MBR传统格式的磁盘「Legacy」，先安装的Windows，后安装Deepin的话，默认一定会出现GRUB引导菜单。
+情况二：如果是MBR传统格式的磁盘「Legacy」，但是先安装的Deepin，后安装Windows，则需要进LIVE重建GRUB引导。
+情况三：如果是GPT新格式磁盘「UEFI」，先安装的Windows，后安装Deepin，则需要在BIOS中将Windows Boot Manager用减号将优先级调到最低。
+情况四：如果是GPT新格式磁盘「UEFI」，但是先安装的Deepin，后安装Windows，则需要安装Windows后进Deepin更新GRUB。
+注意一：如果UEFI安装Windows7与Deepin双系统，则只有启用CSM兼容模式才能启动Win7系统。当启用CSM兼容模式时，将无法调整GPT各分区启动的优先级，如果后安装Deepin，会导致重启直接进入Windows，不出现GRUB启动菜单，F12中的BIOS启动菜单也只有Windows Boot Manager，无法进入Deepin系统。解决办法是先进BIOS关闭CSM，然后重启还进入BIOS并设置Deepin所在分区为最高启动优先级，保存BIOS设置，再次重启进入BIOS并打开CSM兼容模式。第三次重启，此时就能看到GRUB引导菜单了。
+注意二：最省心的双系统安装BIOS设置是“UEFI Only”+“CSM Disabled”+“Secure Boot Disabled”。
+\end{lstlisting}
+
+\section{Windows系统读写EFI分区}
+\begin{lstlisting}
+cmd中运行diskpart， 可通过以下命令为EFI分区分配盘符。
+查看硬盘：list disk
+选择硬盘：select disk 0
+查看分区：list partition
+选择分区：select partition 1
+分配盘符：assign
+右键以管理员身份运行notepad，“文件”-“打开”，就可以读写EFI分区了。
+\end{lstlisting}
+
+\section{双系统修复Windows EFI}
+\begin{lstlisting}
+Windows启动盘引导进入安装界面，点击“下一步”，再点击左下角“修复计算机”。
+点击“疑难解答”，进入“命令提示符”，并根据上一节“Windows系统读写EFI分区”说明挂载EFI分区。执行list volume查查看盘符，并记下系统盘符和EFI启动分区盘符。执行exit退出diskpart。
+例如我的Windows系统盘符为C，EFI启动分区盘符为F，则可以这样修复：
+bcdboot C:\Windows /s F: /f uefi /l zh-cn
+可以确认：dir F:\EFI，能看到Microsoft目录说明成功。
+\end{lstlisting}
+
+\section{制作USB启动盘}
+\begin{lstlisting}
+sudo dd if=/path/to/the/downloaded/iso of=/path/to/the/USB/device
+显示进度：
+sudo dd if=/path/to/the/downloaded/iso of=/path/to/the/USB/device status=progress
+\end{lstlisting}
+
+\section{EFI引导分区不要删除ubuntu}
+\begin{lstlisting}
+EFI引导分区下同时存在deepin和ubuntu两个文件夹，无论你是否安装了Ubuntu系统。
+原因是Ubuntu有硬件厂商的安全认证证书，而deepin暂时还没有，所以只能依赖Ubuntu的证书来通过grub引导启动了。
+删除ubuntu目录将无法启动Deepin！
+修复方法：手动创建ubuntu目录并从同级deepin中拷贝grubx64.efi和grub.cfg。
+\end{lstlisting}
+
+\section{误删EFI分区后的还原}
+\begin{lstlisting}
+第一步：利用Deepin安装盘进入LIVE并修复引导，此时ls /boot/efi/EFI可以看到已经生成deepin目录，但还无法引导系统。
+第二步：sudo cp -r /boot/efi/EFI/deepin /boot/efi/EFI/ubuntu
+该指令的可靠性可以apt download grub-efi-amd64-signed后解压证实。
+\end{lstlisting}
+
+\section{恢复Deepin引导主题}
+\begin{lstlisting}
+UEFI启动方式，如果先安装Deepin后安装Ubuntu形成双系统时，即使在Deepin系统下执行grub-install，也会使用Ubuntu的GRUB引导菜单主题。
+原因是Deepin依赖Ubuntu的安全引导。解决办法：
+sudo cp /boot/efi/EFI/deepin/grub.cfg /boot/efi/EFI/ubuntu/grub.cfg
+sudo grub-install
+\end{lstlisting}
+
+\section{命令行查看EFI启动项}
+\begin{lstlisting}
+在终端执行命令：efibootmgr
+显示：
+BootCurrent: 0002
+Timeout: 1 seconds
+BootOrder: 0001,0000,0002,0013,0014,0015,0016,0012,0017
+Boot0000* deepin
+Boot0001* debian
+Boot0002* uos
+Boot0012* UEFI: SanDisk
+Boot0013  ubuntu
+Boot0014* UEFI OS
+Boot0015  ubuntu
+Boot0016* UEFI OS
+Boot0017* UEFI: SanDisk
+BootCurrent标号为2，指当前系统为uos，*代表有效启动，BootOrder代表启动顺序。
+更多用法可查询：efibootmgr --help
+\end{lstlisting}
+
+\section{查看当前EFI启动项详情}
+\begin{lstlisting}
+efibootmgr -v
+bootctl
+\end{lstlisting}
+
+\section{删除重复的EFI启动项}
+\begin{lstlisting}
+sudo efibootmgr -D
+\end{lstlisting}
+
+\section{调整EFI启动项顺序}
+\begin{lstlisting}
+sudo efibootmgr -o X,Y #指定标号为X的启动项顺序在Y之前
+例如：sudo efibootmgr -o 0002,0001
+\end{lstlisting}
+
+\section{创建EFI启动项}
+\begin{lstlisting}
+默认/dev/sda：sudo efibootmgr -c -L test -l "\EFI\uos\grubx64.efi"
+指定/dev/sdb：sudo efibootmgr -c -L test -l "\EFI\debian\grubx64.efi" -d /dev/sdb
+\end{lstlisting}
+
+\section{删除EFI启动项}
+\begin{lstlisting}
+sudo efibootmgr -B -b 0003
+\end{lstlisting}
+
+\section{查看硬盘分区信息}
+\begin{lstlisting}
+sudo parted -l
+sudo fdisk -l
+lsblk
+blkid
+df -h
+\end{lstlisting}
+
+\section{修复黑苹果Clover引导}
+\begin{lstlisting}
+添加引导：sudo efibootmgr -c -L Clover -l "\EFI\CLOVER\CLOVERX64.efi"
+查看并调整顺序：efibootmgr -v
+详见“调整EFI启动项顺序”等。
+\end{lstlisting}
+
+\section{Live模式调整磁盘分区大小}
+\begin{lstlisting}
+进入Live模式后，运行启动器“GParted”，可以调整磁盘分区大小。
+请耐心等待，调整完成后如果无法启动，则还需要修复磁盘文件系统，例如：
+fsck.ext4 /dev/sda3
+其中/dev/sda3为ROOT所在分区，请根据实际情况酌情修改。
+\end{lstlisting}
+
+\section{Live模式防锁屏后无法登陆}
+\begin{lstlisting}
+Debian的Live系统用户密码是live，但Deepin Live User密码却好像是随机的字符。
+通过命令users可以查到用户名为deepin，但密码不是deepin，也不是live。
+通过Deepin安装盘进入Live系统后，如果要长时间操作，例如调整磁盘分区，则可能会在15分钟后自动锁屏，这时就没有办法进入DDE桌面了。
+解决方法：Ctrl+Alt+F2，进入tty2，执行sudo su拿到管理员权限后，修改用户密码：
+passwd deepin
+密码修改完成后，Ctrl+Alt+F1切换到登陆界面，输入刚才修改的密码登陆。
+要防止这种情况出现的办法：“控制中心”-“账户”选择“无密码登陆”；“电源管理”取消“唤醒显示器时需要密码”和“待机恢复时需要密码”。
+\end{lstlisting}
+
+\section{解决多系统启动缓慢}
+\begin{lstlisting}
+多Linux系统如果共用同一个swap交换空间，因为在安装新的Linux系统时，会自动格式化swap交换空间，导致其uuid发生变化，与之前安装的Linux系统/etc/fstab自动挂载表中记录的swap uuid不一致，所以导致启动长时间寻找swap分区。用systemd-analyze命令查看，会发现userspace使用了大量时间。
+解决方法：修改/etc/fstab，让swap分区与新的uuid同步。
+\end{lstlisting}
+
+\section{VirtualBox从U盘启动}
+\begin{lstlisting}
+第一步，用lsblk确定U盘设备名称，例如：/dev/sdc
+第二步，为其它用户添加U盘读写权限：sudo chmod o+rw /dev/sdc
+第三步，创建U盘虚拟磁盘文件：VBoxManage internalcommands createrawvmdk -rawdisk /dev/sdc -filename ~/UDISK.vmdk
+第四步，创建虚拟机后，设备-存储：“控制器”右键添加硬盘，并注册刚才创建的U盘虚拟磁盘
+第五步，启动虚拟机，F12键：选择第2硬盘启动。
+\end{lstlisting}
+
+\section{rEFInd多系统引导}
+\subsection{rEFInd简介与安装}
+\begin{lstlisting}
+rEFInd适用Linux、Windows和macOS多系统引导，填补GRUB不支持macOS的空白，速度快，支持主题美化。
+官网：http://www.rodsbooks.com/refind
+下载：https://sourceforge.net/projects/refind/files
+虽然可以从源里安装：sudo apt install refind
+但仍然建议从官网下载deb新版安装包手动安装。
+后期维护根据需要可以执行：refind-install 或 refind-mkdefault
+\end{lstlisting}
+
+\subsection{rEFInd多系统配置}
+\begin{lstlisting}
+scanfor manual internal #搜索手动配置和内置硬盘
+dont_scan_volumes "Deepin","Home","Data","Debian","Ubuntu","Arch","Neon","UOS" #不要在这些分区上搜索，提高启动速度
+dont_scan_dirs EFI/boot #不搜索这个目录，避免创建fallback引导，基于BOOTX64.efi,也可以忽略BOOTX64.efi
+dont_scan_files fbx64.efi,grubx64.efi,mmx64.efi,shimx64.efi #忽略这些文件可以避免进入GRUB二级目录
+#scan_all_linux_kernels false #不搜索没有.efi后缀名的内核
+resolution 1920 1080 #分辨率
+big_icon_size 128 #限制最大图标尺寸
+icons_dir images #自定义图标
+hideui banner #可消除闪烁
+\end{lstlisting}
+
+\subsection{手动编写Linux引导}
+\begin{lstlisting}
+menuentry "Deepin 20" {
+    volume Deepin
+    loader /vmlinuz
+    initrd /initrd.img
+    options "root=UUID=0affb267-fcaa-44b9-b08f-2341f56572d5 ro quiet"
+    submenuentry "Boot using fallback" {
+        loader /vmlinuz.old
+        initrd /initrd.img.old
+    }
+    submenuentry "Boot to terminal" {
+        add_options "systemd.unit=multi-user.target"
+    }
+}
+\end{lstlisting}
+
+\subsection{EFI支持xfs磁盘格式}
+\begin{lstlisting}
+http://www.rodsbooks.com/refind/drivers.html
+http://efi.akeo.ie/
+实践发现，/boot分区使用xfs时，refind引导非常慢，建议改用ext4。
+\end{lstlisting}
+
+\subsection{rEFInd添加主题}
+\begin{lstlisting}
+主题下载：https://github.com/topics/refind-theme
+以rEFInd-minimal为例，下载或克隆后，解压到：/boot/efi/EFI/refind/themes/rEFInd-minimal/
+在/boot/efi/EFI/refind/refind.conf最后添加：include themes/rEFInd-minimal/theme.conf
+\end{lstlisting}
+
+
+\chapter{Deepin远程控制与共享}
+
+\section{向日葵远程控制}
+\begin{lstlisting}
+国产远程控制软件：https://sunlogin.oray.com
+在网络封锁日益严重的今天，国产可能是唯一的选择。
+\end{lstlisting}
+
+\section{TeamViewer远程控制}
+\begin{lstlisting}
+安装：sudo apt install teamviewer
+安装后即可于启动器中“TeamViewer”快捷方式启动，建议注册用户，登陆后将经常需要远程控制的设备添加到用户。
+TeamViewer请勿连接过多主机，否则很可能被判断为商用。
+\end{lstlisting}
+
+\section{AnyDesk远程控制}
+\begin{lstlisting}
+安装：sudo apt install anydesk
+安装后即可于启动器中“AnyDesk”快捷方式启动，支持Windows、macOS、Linux、Android、iOS等几乎全平台远程桌面连接。支持ID或者IP连接。
+官方网站：https://anydesk.com/
+目前AskDesk在自动启动后的权限上有些问题。
+\end{lstlisting}
+
+\subsection{提高AnyDesk远程控制权限}
+\begin{lstlisting}
+设置›安全›交互连接：选择“始终允许”。经此设置后，访问Windows 7以上系统时，当开启UAC的情况下，也能获得操作权限。
+\end{lstlisting}
+
+\subsection{AnyDesk自动连接控制}
+\begin{lstlisting}
+默认AnyDesk是需要被控端接受连接的，但通过“自主访问”选项，可以实现自动连接。
+设置›安全›自主访问：选择“允许自主访问”，并输入连接密码。
+\end{lstlisting}
+
+\subsection{禁止AnyDesk自启动}
+\begin{lstlisting}
+禁止自启动：sudo systemctl disable anydesk
+恢复自启动：sudo systemctl enable anydesk
+\end{lstlisting}
+
+\section{VNC远程控制}
+\begin{lstlisting}
+应用商店搜索VNC，可以安装“VNC Viewer”和“VNC Server”两款软件，分别对应客户端和服务端。
+官方主页可下载最新安装包：https://www.realvnc.com
+\end{lstlisting}
+
+\section{RDP协议连接Windows远程桌面}
+\begin{lstlisting}
+应用商店搜索 Remmina ，安装即可连接Windows远程桌面。
+\end{lstlisting}
+
+\section{Linux打印机共享}
+\begin{lstlisting}
+服务端：“启动器”-“打印设置”，从菜单“服务器”-“设置”中勾选“发布连接到这个系统的共享打印机”和“允许从互联网打印”。默认被添加的本地打印机是处于共享状态的，可以通过相应打印机右键菜单确认。
+客户端：“启动器”-“打印设置”-“添加”，“查找网络打印机”页面输入打印机服务器地址，即可找到IPP协议的网络打印机。
+例如服务器地址为10.1.1.1，则搜索出来的打印机“输入设备URI”为：
+ipp://10.1.1.1:631/printers/HP_LaserJet_M1005
+前进，应用，打印测试页确认是否成功。
+补充1：“打印设置”是CUPS打印机管理服务的图形化管理工具，可在/etc/cups/cupsd.conf看到全部配置。
+补充2：请不要选择SMB打印机共享，地址类似：smb://10.1.1.1/HP_LaserJet_M1005
+补充3：“允许远程管理”与“允许从互联网打印”两个选项冲突，只能二选一。
+\end{lstlisting}
+
+\section{Windows打印机共享}
+\begin{lstlisting}
+服务端：与“Linux打印机共享”配置相同，区别只是客户端。
+客户端：需要执行以下步骤
+1. 安装打印机的Windows驱动，当弹出“请通过USB线连接打印机之类”的提醒时，说明驱动已经安装成功，取消退出安装界面即可。
+2. “设备和打印机”-“添加打印机”-“添加网络打印机”，点击“我需要的打印机不在列表中”，从“按名称选择共享打印机”的输入框中填写打印机地址，类似：
+http://10.1.1.1:631/printers/HP_LaserJet_M1005
+下一步，在弹出的窗口中选择品牌和型号即可。
+\end{lstlisting}
+
+\section{Windows云打印共享}
+\begin{lstlisting}
+服务端：Windows上安装Deepin官方提供的“深度云打印”服务软件，可从QQ群19346666群文件下载。USB连接打印机并安装驱动。
+客户端：“启动器”-“深度云打印配置助手”，通过打印服务器地址和授权码连接。
+备用下载地址：https://pan.baidu.com/s/1bofTyoR
+\end{lstlisting}
+
+
+\chapter{Deepin运行Windows软件}
+
+\section{安装运行Windows绿色软件}
+\begin{lstlisting}
+进入绿色软件所在目录，右键“在终端中打开”，执行：
+deepin-wine Windows绿色软件.exe
+\end{lstlisting}
+
+\section{为大型Windows软件创建独立运行环境}
+\begin{lstlisting}
+建议每个大型软件使用一个独立的容器（运行环境），下面以安装Rosetta Stone为例。
+第一步：拷贝或者创建容器
+cp -r ~/.deepinwine/Deepin-QQ ~/.rosetta 或者
+WINEPREFIX=~/.rosetta deepin-wine winecfg
+第二步：安装
+WINEPREFIX=~/.rosetta deepin-wine RosettaStone5.0.37.exe
+如遇安装或者运行异常，可调试：
+WINEDEBUG=+pid,+tid,+process WINEPREFIX=~/.rosetta deepin-wine $HOME'/.rosetta/drive_c/Program Files/Rosetta Stone/Rosetta Stone Language Training/Rosetta Stone.exe'
+参考官方维基：https://wiki.deepin.org/wiki/Deepin-wine
+注意：64位程序需要安装wine64，效果不佳。
+\end{lstlisting}
+
+\section{修改QQ聊天窗口文字大小}
+\begin{lstlisting}
+如果觉得QQ聊天窗口字体太小了，可以打开终端，执行：
+WINEPREFIX=~/.deepinwine/Deepin-QQ deepin-wine winecfg
+弹出窗口中切换到“显示”页面，“屏幕分辨率”增大dpi，确定重启。
+\end{lstlisting}
+
+\section{双击运行Windows软件}
+\begin{lstlisting}
+进入主目录，文件管理器Ctrl+H显示隐藏文件，进入.local/share/applications目录。
+创建文件：deepinwine.desktop，添加如下内容并保存：
+[Desktop Entry]
+Categories=System;Utility;
+Exec=/usr/bin/deepin-wine %F
+Name=Wine
+Terminal=false
+NoDisplay=true
+MimeType=application/x-ms-dos-executable;
+Type=Application
+然后在Windows的exe可执行文件上右键，“打开方式”选择Wine作为默认程序。
+\end{lstlisting}
+
+\section{适配绿色版Photoshop CC}
+\begin{lstlisting}
+1.删除DeepinQQ旧容器：rm -rf ~/.deepinwine/Deepin-QQ
+2.启动器运行QQ，等待出现登陆界面后再关闭
+3.删除默认旧容器：rm -rf ~/.wine
+4.借Deepin-QQ容器可避免标题乱码：cp -r ~/.deepinwine/Deepin-QQ ~/.wine
+5.修改为Windows 7系统：deepin-wine winecfg
+6.安装Phoneshop CC绿色版（thx Ansifa）
+\end{lstlisting}
+
+\section{卸载Windows软件}
+\begin{lstlisting}
+首先下载绿色卸载软件：https://geekuninstaller.com/download
+默认容器：双击geek.exe即可
+指定容器：WINEPREFIX=~/.rosetta deepin-wine geek.exe
+简单粗暴：rm -rf ~/.rosetta
+自带卸载功能deepin-wine不支持：wine uninstaller
+\end{lstlisting}
+
+
+\chapter{Deepin疑难问题解答}
+
+\section{安装Deepin时找不到M.2硬盘}
+\begin{lstlisting}
+当主板使用M.2接口，NVMe协议的固态硬盘时，会导致安装Deepin时无法找到硬盘。尝试：
+1. 将硬盘模式从RAID更改为AHCI。
+2. 禁用”M.2/Optane Genie“选项。当M.2/Optane Genie设置为开启时，它将在安装时支持Intel傲腾[Optane]内存，并在安装2个或者更多M.2设备时支持RAID功能。
+\end{lstlisting}
+
+\section{应用程序假死或无响应}
+\begin{lstlisting}
+由于Deepin的窗口管理器偶尔会导致弹出窗口已经获得焦点，但却并没有显示在所有窗口的最前端，此时会导致应用程序无法响应鼠标事件，让用户误以为程序假死或者无响应，导致不得不关闭应用后重启。
+解决方法：按ESC键，或者先按住ALT键，再按下TAB键，将失去响应的应用程序相关的弹出窗口关闭。这些弹出窗口一般都是打开文件或者保存文件窗口。
+\end{lstlisting}
+
+\section{禁用IPv6解决QQ图片显示}
+\begin{lstlisting}
+添加内核参数彻底禁用IPv6：sudo dedit /etc/default/grub
+在此行添加参数：GRUB_CMDLINE_LINUX="ipv6.disable=1"
+保存退出后执行：sudo update-grub
+\end{lstlisting}
+
+\section{从3D游戏返回后屏幕闪烁}
+\begin{lstlisting}
+15.11版本发布时，官方宣称这两个问题已经解决。
+* 修复多次切换3D/2D模式后打开新的有标题栏的窗口时会导致屏幕闪烁的问题；
+* 修复多次切换3D/2D模式后打开新的有标题栏的窗口时其它未激活窗口的阴影显示为黑色；
+实际未解决，升级内核至5.1.20，Nvidia驱动至430.34问题依然存在。
+重启后问题可消失，改成deepin-wm窗口管理器问题也消失。
+说明是KWin的锅。
+临时解决办法：注销或者重启DDE桌面。
+sudo service lightdm restart
+或者：
+sudo systemctl restart lightdm
+\end{lstlisting}
+
+\section{关闭错误报警蜂鸣声}
+\begin{lstlisting}
+检查模块是否启动：lsmod |grep pcspkr
+临时关闭：sudo rmmod pcspkr
+永久关闭：
+方法一：
+deepin-editor ~/.profile 添加下面三行内容
+sudo -S rmmod pcspkr <<EOF
+password(你的密码)
+EOF
+在Shell脚本中，通常将EOF与 << 结合使用，表示后续的输入作为子命令或子Shell的输入，直到遇到EOF为止，再返回到主Shell,即将‘你的密码’当做命令的输入。
+方法二：
+sudo deepin-editor /etc/modprobe.d/nobeep.conf 添加 blacklist pcspkr
+经测试，虽然pcspkr不再自启动，但电脑启动时会发出奇怪噪音，错误报警声仍然存在。
+备注：
+如果开机画面屏幕输出”Driver 'pcspkr' is already registered“则可用方法二解决。
+\end{lstlisting}
+
+\section{睡眠/休眠唤醒之后触摸板失灵}
+\begin{lstlisting}
+作者：ChenHacker（QQ：2041026133）
+链接：https://www.luogu.com.cn/blog/ChenHacker/linuxsleep
+问题原因:
+Linux的触摸板驱动是启动内核作为一个模块加载的，睡眠的时候可能由于Linux内核的bug这个模块坏掉了，所以需要重新加载，而我们知道Linux系统中重新加载内核模块的方法是:
+sudo modprobe -r *** #移除模块
+sudo modprobe *** #加载模块
+经过我几个小时的摸索，得知我的笔记本触摸板驱动的模块是i2c_hid(部分笔记本是psmouse)，所以当唤醒睡眠之后执行一下命令我的触摸板就可以工作了。
+sudo modprobe -r i2c_hid && sudo modprobe i2c_mid
+但是每次睡眠之后都要打开终端执行这个命令，在Linux下怎么可以这么繁琐？？？
+所以我们通过修改/usr/lib/systemd/system/systemd-suspend.service文件来解决。
+这个文件是有关休眠服务的文件,也就是当你按下睡眠键时,系统就会执行这个文件。
+我们先写好自己的睡眠文件：/usr/lib/systemd/system/mysleep
+#!/bin/bash
+/usr/lib/systemd/systemd-sleep suspend && modprobe -r i2c_hid && modprobe i2c_hid
+添加可执行权限：sudo chmod +x /usr/lib/systemd/system/mysleep
+然后修改/usr/lib/systemd/system/systemd-suspend.service文件中的对应选项：
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/systemd/system/mysleep
+刷新系统服务:
+sudo systemctl daemon-reload
+然后这个问题就被根治了!
+\end{lstlisting}
+
+\section{任务栏/启动器消失} \label{section:dock_disappear}
+\begin{lstlisting}
+终端执行命令：rm -rf $HOME/.config/dconf
+或者文件管理器进入主目录，Ctrl+H显示隐藏文件后手动删除.config/dconf目录。
+注销或重启。
+\end{lstlisting}
+
+\section{窗口无响应或系统卡顿}
+\begin{lstlisting}
+首先请确认已经安装了正确的显卡驱动：目前KWin仍然是官方默认的窗口管理器，但需要正确的显卡驱动支持。如果依然出现窗口无响应或系统卡顿，可以尝试Super+Shift+Tab快捷键两次：先关闭窗口特效，再打开窗口特效。
+如果上述问题经常出现，可以牺牲部分特效，切换成2D窗口管理器，依次执行：
+sudo apt install deepin-metacity
+sudo apt purge dde-kwin
+重启后用neofetch确认WM: Metacity。
+\end{lstlisting}
+
+\section{创建DEB安装包}
+\begin{lstlisting}
+以打包软件包test为例，首先创建test/DEBIAN/control文件，必备内容：
+Package: name
+Version: 1.0-1
+Architecture: amd64
+Maintainer: 维护者 <user@mail.com>
+Description: 简介
+  软件包详细介绍。
+然后打包 dpkg-deb -b test 即可。
+建议生成MD5：find ./usr -type f |xargs -I{} md5sum {} >DEBIAN/md5sums
+配合脚本postinst、prerm可实现安装配置与卸载清理。
+\end{lstlisting}
+
+\section{隐藏分区}
+\begin{lstlisting}
+sudo dedit /etc/udev/rules.d/90-hide_parts.rules
+ENV{ID_FS_UUID}=="2593f30b-ef35-4860-8af3-da93cd0f50fc", ENV{UDISKS_IGNORE}="1"
+ENV{ID_FS_UUID}=="a35dac37-91cb-4439-8db7-8f76509e2425", ENV{UDISKS_IGNORE}="1"
+ENV{ID_FS_UUID}=="5C6E93886E935A1A", ENV{UDISKS_IGNORE}="1"
+lsblk -f查询分区UUID，替换，保存，重启生效。
+\end{lstlisting}
+
+
+\chapter{Deepin终端操作技巧集锦}
+
+\section{以管理员身份自启动}
+\begin{lstlisting}
+编辑 ~/.profile 添加下面三行内容：
+sudo -S rmmod pcspkr <<EOF
+password(你的密码)
+EOF
+在Shell脚本中，通常将EOF与 << 结合使用，表示后续的输入作为子命令或子Shell的输入，直到遇到EOF为止，再返回到主Shell，即将‘你的密码’当做命令的输入。
+\end{lstlisting}
+
+\section{递归更改文件所有者}
+\begin{lstlisting}
+sudo chown -R <用户名>:<用户名> *
+find . -exec sudo chown <用户名>:<用户名> {} \;
+\end{lstlisting}
+
+\section{从指定类型文件中查找}
+\begin{lstlisting}
+find . -name '*.c' | awk '{print "grep -i -nH keyword "$1}' | /bin/bash
+find . -name '*.c' -exec grep -i -nH "keyword" {} \;
+\end{lstlisting}
+
+\section{更好的搜索方法}
+\begin{lstlisting}
+grep -i "search_string" . -r --include=*.txt
+grep "search_string" . -r --include=*.txt --include=*.cpp --include=*.h
+\end{lstlisting}
+
+\section{将行末多个空行转换成一个空行}
+\begin{lstlisting}
+find . -name '*.tex' -exec sed -i '/^$/{N;/^\n*$/D}' {} \;
+\end{lstlisting}
+
+\section{ls只显示目录名}
+\begin{lstlisting}
+ls -l |grep ^d 或 ls -d  */
+\end{lstlisting}
+
+\section{ls只显示文件}
+\begin{lstlisting}
+ls -l |grep ^-
+\end{lstlisting}
+
+\section{ls显示软链接}
+\begin{lstlisting}
+ls -n
+\end{lstlisting}
+
+\section{为子目录和文件设置不同权限}
+\begin{lstlisting}
+find . -type d -exec sudo chmod 755 {} \;
+find . -type f -exec sudo chmod 644 {} \;
+\end{lstlisting}
+
+\section{为指定类型文件设置可执行权限}
+\begin{lstlisting}
+find . -name 'commit-msg' -type f -exec chmod +x {} \;
+find . -name '*.sh' -type f -exec chmod +x {} \;
+\end{lstlisting}
+
+\section{获取脚本文件所在路径}
+\begin{lstlisting}
+包含文件：$0
+只要路径：`dirname "$0"`
+\end{lstlisting}
+
+\section{批量文本替换}
+\begin{lstlisting}
+grep "old" -rl ./ |xargs sed -i "s/old/new/g"
+grep "Objbase.h" -rl . --include=*.cpp --include=*.h |xargs sed -i "s/Objbase.h/objbase.h/g"
+或：sed -i "s/原字符串/新字符串/g" `grep 原字符串 -rl 所在目录
+或：sed -i 's|ftp://old.url/|ftp://new.url/|g' some/filepath
+举例：
+grep "图像" -rl . --include=*.tex |xargs sed -i "s/图像/图象/g"
+\end{lstlisting}
+
+\section{获取CPU个数并四则运算后导出环境变量}
+\begin{lstlisting}
+export MAKE_JOBS=$(echo $(nproc)-1|bc)
+应用：make -j $MAKE_JOBS
+\end{lstlisting}
+
+\section{命令行解压缩到指定目录}
+\begin{lstlisting}
+tar xvf XXX.tar.xz -C /opt
+不需要添加J选项，tar会根据压缩包名称识别压缩包格式。
+所以xvf应该可以作为万能参数了。
+\end{lstlisting}
+
+\section{通过git实现跨平台的grep用法}
+\begin{lstlisting}
+git grep -li pkgconfig -- \*.pr?
+\end{lstlisting}
+
+\section{打印当前目录路径}
+\begin{lstlisting}
+pwd
+\end{lstlisting}
+
+\section{初始化当前用户配置}
+\begin{lstlisting}
+执行此命令前，请一定要谨慎！请一定要明白你在做什么！
+rm -r ~/.*
+重启。
+\end{lstlisting}
+
+\section{初始化root用户配置}
+\begin{lstlisting}
+执行此命令前，请一定要谨慎！请一定要明白你在做什么！
+sudo rm -r /root
+重启。
+\end{lstlisting}
+
+\section{查询命令软链接}
+\begin{lstlisting}
+例如：ls -l $(which gcc)
+显示：lrwxrwxrwx 1 root root 5 9月  17 22:14 /usr/bin/gcc -> gcc-6
+\end{lstlisting}
+
+\section{top命令技巧}
+\begin{lstlisting}
+top是一个常见的进程查看命令，在top运行界面按下h可查看帮助。
+按下1:查看各CPU占用率。
+按下m:查看内存使用情况。
+按下c:查看命令详细路径。
+按下L：搜索进程。
+\end{lstlisting}
+
+\section{查看指定行的内容}
+\begin{lstlisting}
+查看第3行至第5行共3行：sed -n 3,5p /etc/default/grub
+查看第3行和第5行共2行：sed -n "3p;5p" /etc/default/grub
+\end{lstlisting}
+
+\section{搜索匹配多个关键词}
+\begin{lstlisting}
+区分大小写：lspci |egrep "VGA|3D"
+不区分大小写：lspci |egrep -i "vga|3d"
+\end{lstlisting}
+
+\section{字符串截取}
+\begin{lstlisting}
+以str变量为例：str=gmp-6.1.0.tar.bz2
+echo ${str} |cut -d '-' -f 1 #以‘-’分隔，输出第1列gmp
+echo ${str%%-*} #以‘-’分隔，最大限度从前面截取字符串gmp
+echo ${str##*.} #以‘.’分隔，最大限度从后面截取字符串bz2
+echo ${str:0:3} #从左开始输出3个字符gmp
+echo ${str:4} #从左面第5个字符开始输出直到结束6.1.0.tar.bz2
+echo ${str:4:5} #从第5个字符开始输出5个字符6.1.0
+echo ${str:0-8} #从右开始输出8个字符.tar.bz2
+\end{lstlisting}
+
+
+\chapter{ArchLinux DDE 折腾笔记}
+
+\section{Arch简介与安装指南}
+\begin{lstlisting}
+ArchLinux中的DDE更新十分频繁，可以看作是DDE的内部测试版。本章节尝试总结Arch中安装DDE的最简步骤，默认采用UEFI+GPT安装方式，Legacy+MBR用户请自行调整配置，仅供有一定Linux基础的用户参考。
+官方问题反馈地址：https://github.com/linuxdeepin/developer-center/issues
+注意：Arch不适合新手，也不适合自学能力差的用户。
+镜像下载地址：https://mirrors.tuna.tsinghua.edu.cn/archlinux/iso/latest/
+官方安装维基：https://wiki.archlinux.org/index.php/Installation_guide
+中文论坛安装：https://bbs.archlinuxcn.org/viewtopic.php?id=1037
+知乎安装指南：https://www.zhihu.com/question/21427410
+\end{lstlisting}
+
+\section{安装1：连接网络}
+\begin{lstlisting}
+有线网络自动获取地址：安装前插好网线，或者手动执行dhcpcd
+无线网络：wifi-menu
+如提示“No networks found”，执行 rfkill unblock wifi 后再次：wifi-menu
+ip link 或 iw dev 查询接口，lspci -k |more 查询驱动。
+详见：https://wiki.archlinux.org/index.php/Network_configuration/Wireless ，可切换至中文语言查看。
+\end{lstlisting}
+
+\section{安装2：分区与挂载}
+\begin{lstlisting}
+分区：fdisk结合cfdisk，磁盘GPT分区格式，必须创建一个EFI分区，lsblk或parted -l可查看详情。这里仅以一个必备的EFI分区和一个必备的根分区举例。
+格式化示例：
+mkfs.fat -F32 /dev/sda1
+mkfs.ext4 /dev/sda2
+挂载示例：
+mount /dev/sda2 /mnt
+mkdir -p /mnt/boot/efi
+mount /dev/sda1 /mnt/boot/efi
+\end{lstlisting}
+
+\section{安装3：换国内源}
+\begin{lstlisting}
+nano /etc/pacman.d/mirrorlist
+Ctrl+W搜索tuna，Ctrl+K剪切，Ctrl+HOME跳到第一行，Ctrl+U把清华大学的源优先级调到最高。继续搜索ustc，同样的方法把中科大的源放在第二优先级。
+Ctrl+O保存，Ctrl+X退出。
+\end{lstlisting}
+
+\section{安装4：安装与配置}
+\begin{lstlisting}
+注意：以下步骤只适用UEFI+GPT磁盘格式，BIOS+MBR已经过时了。为了提高稳定性，默认安装LTS内核。请严格按步骤操作，相关知识欠缺的，请阅读官方维基补充。
+安装：pacstrap /mnt base linux-lts linux-firmware grub efibootmgr os-prober sudo nano networkmanager deepin deepin-extra
+自动挂载：genfstab -U /mnt >> /mnt/etc/fstab
+切换系统：arch-chroot /mnt
+系统引导：grub-install && grub-mkconfig -o /boot/grub/grub.cfg
+启用桌面：systemctl enable lightdm
+启用网络：systemctl enable NetworkManager
+创建用户：useradd -m -G wheel <用户名>
+修改密码：passwd <用户名>
+授予权限：nano /etc/sudoers，取消 %wheel ALL=(ALL) ALL 所在行的注释。
+退出系统：exit
+卸载重启：umount -R /mnt && reboot
+\end{lstlisting}
+
+\section{安装5：后期批处理}
+\begin{lstlisting}
+将以下内容保存为arch-dde-setup.sh，登陆DDE后给予可执行权限并在终端运行。
+
+#! /bin/bash
+# 主机名
+read -p "Please input the hostname: " hostname
+sudo hostnamectl set-hostname $hostname
+sudo bash -c 'echo -e "\n127.0.0.1\thostname\n127.0.0.1\t$hostname" >> /etc/hosts'
+# 时区
+sudo timedatectl set-timezone Asia/Shanghai
+sudo timedatectl set-ntp true
+sudo timedatectl set-local-rtc true --adjust-system-clock
+# 中文
+sudo bash -c 'echo -e "\nzh_CN.UTF-8 UTF-8\nen_US.UTF-8 UTF-8" >> /etc/locale.gen'
+sudo locale-gen
+sudo localectl set-locale LANG=zh_CN.UTF-8
+sudo pacman -S noto-fonts-cjk --noconfirm
+# LTS内核头文件
+sudo pacman -S linux-lts-headers --noconfirm
+# 与LTS内核兼容
+sudo pacman -S deepin-anything-dkms --noconfirm
+# 软件源
+sudo bash -c 'echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf'
+sudo bash -c 'echo -e "\n[archlinuxcn]\nServer = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/\$arch\nServer = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch" >> /etc/pacman.conf'
+sudo pacman -Syy
+sudo pacman -S archlinuxcn-keyring --noconfirm
+# 常见软件
+sudo pacman -S bash-completion --noconfirm #终端自动完成
+sudo pacman -S google-chrome --noconfirm #谷歌浏览器
+sudo pacman -S deepin.com.qq.im deepin.com.qq.office --noconfirm #QQ
+sudo pacman -S wps-office wps-office-mui-zh-cn ttf-wps-fonts --noconfirm #WPS办公套装
+sudo pacman -S visual-studio-code-bin --noconfirm #Visual Studio Code
+sudo pacman -S netease-cloud-music --noconfirm #网易云音乐
+sudo pacman -S neofetch --noconfirm #系统信息
+sudo pacman -S gparted --noconfirm #分区管理器
+sudo pacman -S gnome-disk-utility --noconfirm #磁盘
+sudo pacman -S evince poppler-data --noconfirm #文档查看器
+sudo pacman -S remmina --noconfirm #Windows远程桌面
+sudo pacman -S vlc --noconfirm #视频播放器
+sudo pacman -S audacious --noconfirm #音频播放器
+sudo pacman -S git --noconfirm #版本管理
+sudo pacman -S leafpad --noconfirm #文本编辑器
+sudo pacman -S gnome-mines --noconfirm #扫雷
+sudo pacman -S quadrapassel --noconfirm #俄罗斯方块
+sudo pacman -S gnome-nibbles --noconfirm #贪食蛇
+# 禁用IPv6，修复QQ、TIM图片显示
+sudo bash -c "sed -i 's/GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"ipv6.disable=1\"/g' /etc/default/grub"
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+# 输入法
+sudo pacman -S fcitx-im fcitx-configtool --noconfirm
+sudo pacman -S fcitx-skin-material --noconfirm
+echo -e "export GTK_IM_MODULE=fcitx\nexport XMODIFIERS=@im=fcitx\nexport QT_IM_MODULE=fcitx" > ~/.xprofile
+read -p "Done. Press any key to reboot and enjoy." -n 1
+reboot
+
+该批处理脚本可从QQ群19346666群文件下载。
+重启享用。
+\end{lstlisting}
+
+\section{使用LTS内核提高稳定性}
+\begin{lstlisting}
+执行完上面五个步骤，说明Arch+DDE安装已经完成，并且通过第四步安装时选择“pacstrap /mnt linux-lts”而不是“pacstrap /mnt linux”，默认安装的已经是LTS内核了。
+所以下面内容只适合默认linux最新内核包的用户。
+sudo pacman -S linux-lts linux-lts-headers --noconfirm
+sudo pacman -Rdd linux linux-headers
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+\end{lstlisting}
+
+\section{为LTS内核安装dkms后缀包}
+\begin{lstlisting}
+对于LTS内核和定制内核，建议安装后缀名为dkms的包，可以获得更好的稳定性。
+如果你发现Arch+DDE卡顿，建议尝试：
+sudo pacman -S deepin-anything-dkms
+\end{lstlisting}
+
+\section{安装NVIDIA显卡驱动}
+\begin{lstlisting}
+LTS内核需安装：sudo pacman -S nvidia-lts
+非LTS内核安装：sudo pacman -S nvidia
+详见：https://wiki.archlinux.org/index.php/NVIDIA
+双显卡用户还需：sudo pacman -S bbswitch-dkms optimus-manager-qt
+重启后，在“Optimus管理器”设置Optimus切换方法为Bbswitch。
+\end{lstlisting}
+
+\section{更多软件安装}
+\begin{lstlisting}
+sudo pacman -S qq-linux --noconfirm --needed #QQ For Linux
+sudo pacman -S blender --noconfirm --needed #3D建模与视频剪辑
+sudo pacman -S openshot --noconfirm --needed #视频剪辑
+sudo pacman -S audacity --noconfirm --needed #音频编辑器
+sudo pacman -S gimp --noconfirm --needed #图像处理
+sudo pacman -S soundconverter --noconfirm --needed #音频转换器
+sudo pacman -S simplescreenrecorder --noconfirm --needed #录屏
+sudo pacman -S obs-studio --noconfirm --needed #录屏
+sudo pacman -S filezilla --noconfirm --needed #FTP客户端
+sudo pacman -S gcc gdb cmake ninja --noconfirm --needed #开发
+\end{lstlisting}
+
+\section{pacman常见用法}
+\begin{lstlisting}
+维基文档：https://wiki.archlinux.org/index.php/Pacman
+安装：sudo pacman -S package_name1 package_name2 ...
+卸载但保留依赖：sudo pacman -R package_name
+连同依赖一起卸载：sudo pacman -Rs package_name
+升级整个系统：sudo pacman -Syu
+从数据库查询软件包：pacman -Ss string1 string2 ...
+查询本地安装的包：pacman -Qs string1 string2 ...
+安装本地包：sudo pacman -U /path/to/package_name-version.pkg.tar.xz
+查询已安装软件包文件列表：pacman -Ql package_name
+查询未安装软件包文件列表：pacman -Fl package_name
+按文件名查找软件包：pacman -F string1 string2 ...
+清除未安装软件包的缓存：sudo pacman -Sc
+清理所有软件包缓存：sudo pacman -Scc
+\end{lstlisting}
+
+\section{清除孤儿包}
+\begin{lstlisting}
+查询孤儿包：pacman -Qdt
+查询孤儿包且不显示版本号：pacman -Qdtq
+卸载孤儿包：sudo pacman -Rs $(pacman -Qdtq)
+或者：pacman -Qdtq |pacman -Rs -
+\end{lstlisting}
+
+\section{yay替代pacman}
+\begin{lstlisting}
+先安装yay：sudo pacman -S yay
+yay提供原生pacman支持，在具备pacman几乎所有功能的基础上，还支持AUR软件安装。
+例如安装微信：yay -S deepin.com.wechat2
+安装QQ轻聊版：yay -S deepin.com.qq.im.light
+搜索并选择安装示例：yay wechat
+相对pacman六个字母而言，更喜欢三个字母的apt。
+好在yay也是三个字母了^_^
+\end{lstlisting}
+
+\section{yay扩展用法}
+\begin{lstlisting}
+查询软件包信息：yay -Ps
+卸载不需要的依赖包：yay -Yc
+\end{lstlisting}
+
+\section{yay缓存路径}
+\begin{lstlisting}
+yay编译安装AUR软件的缓存路径在：~/.cache/yay
+当出现源码或者补丁下载失败时，可以手动下载后拷贝到相应目录。
+当编译成功后，也可以拷贝pkg.tar.xz安装包备用。
+\end{lstlisting}
+
+\section{免密码挂载分区} \label{section:nopass_mount}
+\begin{lstlisting}
+文件管理器挂载非系统分区时需要密码验证，非常麻烦。解决办法：
+sudo nano /usr/share/polkit-1/actions/org.freedesktop.UDisks2.policy
+修改filesystem-mount-system的allow_active值为yes即可免密。
+  <action id="org.freedesktop.udisks2.filesystem-mount-system">
+    ...
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>yes</allow_active>
+    </defaults>
+  </action>
+\end{lstlisting}
+
+\section{备用Nemo文件管理器}
+\begin{lstlisting}
+yay -S nemo nemo-fileroller cinnamon-translations gnome-terminal
+DDE文件管理器不是很稳定，可以把Nemo当作备用。
+\end{lstlisting}
+
+\section{外部磁盘挂载改/media/\$USER}
+\begin{lstlisting}
+ArchLinux默认会把外部磁盘和可移动磁盘挂载在/run/media/$USER/目录，和别的发行版不同，当多系统共享数据分区时，会带来环境变量配置上的不便。建议软链接可解决：
+创建/media文件夹：sudo mkdir /media
+创建软件链接：sudo ln -s /run/media/$USER /media/$USER
+\end{lstlisting}
+
+\section{删除不再需要的软件}
+\begin{lstlisting}
+在想卸载的软件包上单击右键选择“发送桌面”，用编辑器打开该软件桌面启动器，找到“Exec=/path/to/executeble”，然后用pacman -F /path/to/executeble查找软件包即可定位后卸载。
+\end{lstlisting}
+
+\section{禁止无密码授权}
+\begin{lstlisting}
+如果打开“分区编辑器”这类需要密码授权的应用，不输入密码或者随意输入密码就可以通过认证，则首先确定用户是否在wheel组中：groups <用户名>
+如果用户不在wheel组，则添加：sudo gpasswd -a <用户名> wheel
+删除用户组示例：sudo gpasswd -d <用户名> <组名>
+\end{lstlisting}
+
+\section{禁止root用户登陆}
+\begin{lstlisting}
+禁止登陆：sudo passwd -l root
+解除锁定：
+sudo nano /etc/shadow
+将第一行root:!:<数字>::::::中的!删除，变成root::<数字>::::::
+保存退出。
+\end{lstlisting}
+
+\section{禁止升级指定软件包}
+\begin{lstlisting}
+sudo nano /etc/pacman.conf
+IgnorePkg = package_name_1, package_name_2, package_name_3
+\end{lstlisting}
+
+
+\chapter{Debian 10 折腾笔记}
+
+\section{自定义安装GNOME桌面}
+\begin{lstlisting}
+为了实现wifi联网安装，请从清华大学镜像站下载集成非自由硬件驱动的网络安装镜像：
+地址：https://mirrors.tuna.tsinghua.edu.cn/debian-nonfree/cd-including-firmware/current/amd64/iso-cd/firmware-10.3.0-amd64-netinst.iso
+也可以下载集成非自由硬件驱动的标准版LIVE镜像：
+https://mirrors.tuna.tsinghua.edu.cn/debian-nonfree/cd-including-firmware/current-live/amd64/iso-hybrid/debian-live-10.3.0-amd64-standard+nonfree.iso
+如果需要连接wifi安装，需要在配置网络时，把无线网卡作为主网络接口。
+建议选择中国mirrors.huaweicloud.com镜像源，网络安装镜像需要在“软件选择”界面用空格键取消“Debian 桌面环境”的选择，否则默认会安装GNOME桌面。
+网络安装镜像相对LIVE镜像，安装速度要慢一些。
+安装完成后重启进入终端，登陆设置LANG=C环境变量，可避免中文乱码。
+终端wifi连接见下一条讲解。
+sudo nano /etc/apt/source.list，删除security.debian.org源。
+更新：sudo apt update
+桌面：sudo apt install gnome-core
+字体：sudo apt install fonts-noto-cjk
+\end{lstlisting}
+
+\section{Debian Shell连接wifi}
+\begin{lstlisting}
+以下命令需要root权限：sudo -i
+查看接口：iw dev
+启用接口：ip link set wlan0 up
+连接网络：wpa_supplicant -B -i wlan0 -c <(wpa_passphrase SSID PASSWORD)
+获取地址：dhclient wlan0
+如果提示：Operation not possible due to RF-kill，则需要下载rfkill包解锁：https://packages.debian.org/buster/utils/rfkill
+拷贝到U盘后mount到/mnt，dpkg -i离线安装，然后执行：rfkill unblock wifi
+再次执行ip link set wlan0 up即可启用。
+\end{lstlisting}
+
+\section{更换国内软件源}
+\begin{lstlisting}
+应用程序中运行“Software & Updates”：
+1. Debian Software页面勾选“带有非自由依赖关系的DFSG兼容软件(contrib)”、“非DFSG兼容软件(non-free)”和“源代码”，“下载自”选择“Other...”，在中国服务器中选择“mirrors.huaweicloud.com”。
+2. Updates页面去掉“安全更新(*/updates）”，否则速度奇慢！
+关闭，重新载入。
+\end{lstlisting}
+
+\section{终端命令自动完成}
+\begin{lstlisting}
+sudo apt install bash-completion
+注销或重启生效。
+\end{lstlisting}
+
+\section{驱动无线网卡}
+\begin{lstlisting}
+lspci |grep Network #查看厂商
+多数：sudo apt install firmware-realtek
+或者：sudo apt install firmware-iwlwifi
+少数：sudo apt install firmware-ralink
+根据无线网线型号，安装后重启生效。
+\end{lstlisting}
+
+\section{驱动Nvidia显卡}
+\begin{lstlisting}
+如果你发现Debian非常卡顿迟缓，这说明没有正确安装显卡驱动。
+sudo apt install nvidia-driver
+重启生效。
+\end{lstlisting}
+
+\section{安装中州韵rime-ibus输入法}
+\begin{lstlisting}
+安装ibus-rime: sudo apt install ibus-rime
+设置 - 区域与语言 - 输入源：添加“汉语(RIME)”，注销或重启。
+单击托盘输入法图标部署，Ctrl+`或F4选择输入法方案和输入选项切换。
+下载配置、词库：https://www.github.com/loaden/rime
+覆盖到 ~/.config/ibus/rime 目录下，重新部署。
+\end{lstlisting}
+
+\section{为终端设置Ctrl+Alt+T快捷键}
+\begin{lstlisting}
+WIN+A打开设置，设备-Keyboard-键盘快捷键，在页面底端点击+号添加gnome-terminal命令的快捷键，名称随意。
+\end{lstlisting}
+
+\section{启用触摸板轻拍以点击}
+\begin{lstlisting}
+WIN+A打开设置，设备-Mouse & Touchpad-触摸板，启用“轻拍以点击”。
+\end{lstlisting}
+
+\section{启用触摸板双指滚动}
+\begin{lstlisting}
+WIN+A打开设置，设备-Mouse & Touchpad-触摸板，启用“双指滚动”和“自然滚动”。
+\end{lstlisting}
+
+\section{重启GNOME Shell}
+\begin{lstlisting}
+Alt+F2，输入r回车。
+\end{lstlisting}
+
+\section{启用macOS风格桌面}
+\begin{lstlisting}
+应用程序搜索“Dash”，在搜索结果中点击“软件”分类，安装“Dash to Dock”扩展，从扩展设置中将Dock显示在底部，根据喜好调整设置。
+建议从源里安装：sudo apt install gnome-shell-extension-dashtodock
+Alt+F2输入r启动Shell后，在“优化”程序中启用扩展，点击齿轮图标视喜好配置。
+\end{lstlisting}
+
+\section{启用Windows风格桌面}
+\begin{lstlisting}
+应用程序搜索“Dash”，在搜索结果中点击“软件”分类，安装“Dash to Panel”扩展。
+建议从源里安装：sudo apt install gnome-shell-extension-dash-to-panel
+启动“优化”程序，在窗口标题栏页面启用“最大化”和“最小化”按钮。
+\end{lstlisting}
+
+\section{NetworkManager托管网络}
+\begin{lstlisting}
+sudo nano /etc/NetworkManager/NetworkManager.conf
+设置：managed=true
+重启：sudo systemctl restart NetworkManager
+\end{lstlisting}
+
+\section{显示托盘图标}
+\begin{lstlisting}
+最新版本的“Tray Icons”扩展在Debian上功能不正常，建议从源里安装旧版：
+sudo apt install gnome-shell-extension-top-icons-plus
+\end{lstlisting}
+
+\section{免密码挂载分区}
+详见\ref{section:nopass_mount}
+
+\section{Backport软件安装}
+\begin{lstlisting}
+参考网址：http://backports.debian.org/Instructions/
+终端执行：sudo nano /etc/apt/sources.list.d/backports.list
+添加内容：deb http://deb.debian.org/debian buster-backports main
+安装方法：sudo apt -t buster-backports install "package"
+更新列表：http://backports.debian.org/changes/buster-backports.html
+\end{lstlisting}
+
+\section{Debian急救模式修复GRUB引导}
+\begin{lstlisting}
+下载Debian网络安装镜像制作USB启动盘，Advanced options > Rescue mode进入急救模式，可跳过网络配置和较时步骤。
+方法一：急救模式菜单，选择：重新安装GRUB启动引导器
+方法二：急救模式菜单，选择：在/dev/sdaX根分区中运行shell，然后执行grub-install
+\end{lstlisting}
+
+
+\chapter{LMDE 4 折腾笔记}
+
+\section{LMDE安装与简介}
+\begin{lstlisting}
+LMDE是Linux Mint Debian Edition的简称，是Mint基于Debian的一个发行版：https://www.linuxmint.com
+下载：https://mirrors.tuna.tsinghua.edu.cn/linuxmint-cd/debian/lmde-4-cinnamon-64bit.iso
+安装后通过欢迎页面进行必要的设置，软件源根据测速选择。
+\end{lstlisting}
+
+\section{注释Debian官方安全源}
+\begin{lstlisting}
+sudo nano /etc/apt/sources.list.d/official-package-repositories.list
+在security.debian.org所在行首添加井号注释：
+#deb http://security.debian.org/ buster/updates main contrib non-free
+注释原因：太慢了！
+更新：sudo apt update
+\end{lstlisting}
+
+\section{安装中文输入法}
+\begin{lstlisting}
+首选项 - 输入法 - 简体中文，安装并选择Fcitx框架，根据页面说明操作。
+安装后，建议删除ibus：sudo apt purge ibus*
+\end{lstlisting}
+
+\section{安装中州韵输入法} \label{section:fcitx_rime}
+\begin{lstlisting}
+终端安装中州韵：sudo apt install fcitx-rime
+注销或重启后，点击托盘键盘图标“配置”，添加“中州韵”。
+词库与配置请参考：https://www.github.com/loaden/rime
+\end{lstlisting}
+
+\section{免密码挂载分区}
+详见\ref{section:nopass_mount}
+
+\section{卸载LibreOffice，更换WPS}
+\begin{lstlisting}
+彻底卸载LibreOffice：sudo apt purge libreoffice*
+下载安装WPS Office和字体。
+\end{lstlisting}
+
+
+\chapter{Ubuntu 20.04 折腾笔记}
+
+\section{Ubuntu加速安装进程}
+\begin{lstlisting}
+Ubuntu在有网络连接的情况下，安装时无法指定国内源，有可能出现网络下载缓慢现象。此时可以点击右侧“跳过”取消网络下载更新。
+如果无法跳过下载，可以拔掉网线或者切断无线连接，安装完成后换国内源再更新。
+建议安装时选择“为图形或无线硬件，以及其它媒体格式安装第三方软件”。
+\end{lstlisting}
+
+\section{更换国内软件源}
+\begin{lstlisting}
+Super+A应用程序中运行“软件和更新”：
+“Ubuntu 软件”页面“下载自”选择“其他站点...”，在中国服务器中选择“mirrors.tuna.tsinghua.edu.cn”。
+\end{lstlisting}
+
+\section{安装中州韵输入法}
+\begin{lstlisting}
+安装中州韵：sudo apt install ibus-rime
+设置 - 区域与语言 - 输入源：添加“汉语 - 中文(Rime)”，注销电脑生效。
+目前ibus与WPS、LinuxQQ冲突，会导致这两个软件启动延时约25秒，暂时无解。
+下载配置、词库：https://www.github.com/loaden/rime
+\end{lstlisting}
+
+\section{卸载Snap，更换商店}
+\begin{lstlisting}
+Ubuntu默认安装了Snap，如果你不喜欢，那么可以卸载并更换商店。
+先安装：sudo apt install gnome-software
+后卸载：sudo apt purge snapd
+重启生效。
+\end{lstlisting}
+
+\section{卸载LibreOffice，换WPS}
+\begin{lstlisting}
+使用apt-get完整卸载：sudo apt-get purge libreoffice*
+确认apt list --installed *libreoffice*无输出。
+然后从WPS官网下载安装WPS。
+注意：sudo apt purge libreoffice*失效，提示“E: 无法定位软件包 libreoffice*”。
+\end{lstlisting}
+
+\section{驱动独立显卡}
+\begin{lstlisting}
+应用程序中运行“软件和更新”，在“附加驱动”页面选择专用驱动并应用更改。
+Ubuntu默认会安装正确的显卡驱动，你只需接受更新推送。
+\end{lstlisting}
+
+\section{更多选项优化}
+\begin{lstlisting}
+sudo apt install gnome-tweaks
+应用程序搜索“优化”启动。
+\end{lstlisting}
+
+\section{启用Windows桌面风格}
+\begin{lstlisting}
+安装插件：sudo apt install gnome-shell-extension-dash-to-panel
+优化 - 扩展：启用Dash to panel并配置。
+也可以：https://github.com/home-sweet-gnome/dash-to-panel
+解压到：~/.local/share/gnome-shell/extensions，目录名使用压缩包内metadata.json文件的uuid，即dash-to-panel@jderose9.github.com
+\end{lstlisting}
+
+\section{启用macOS桌面风格}
+\begin{lstlisting}
+安装插件：https://extensions.gnome.org/extension/307/dash-to-dock/
+优化 - 扩展：启用Dash to dock并配置，禁用Dash to panel。
+也可以：https://micheleg.github.io/dash-to-dock/
+解压到：~/.local/share/gnome-shell/extensions，参照metadata.json改目录名。
+\end{lstlisting}
+
+\section{安装GNOME Sehll托盘图标}
+\begin{lstlisting}
+安装地址：https://extensions.gnome.org/extension/1503/tray-icons/
+优化 - 扩展：启用Tray icons并配置。
+也可以：https://github.com/zhangkaizhao/gnome-shell-extension-tray-icons
+解压到：~/.local/share/gnome-shell/extensions，参照metadata.json改目录名。
+\end{lstlisting}
+
+\section{Ubuntu 18.04升级wine 5.0}
+\begin{lstlisting}
+sudo dpkg --add-architecture i386
+wget -qO - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
+sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
+sudo add-apt-repository ppa:cybermax-dexter/sdl2-backport
+sudo apt update
+sudo apt install --install-recommends winehq-stable
+如果失败：
+sudo apt-get install libgnutls30:i386 libldap-2.4-2:i386 libgpg-error0:i386 libxml2:i386 libasound2-plugins:i386 libsdl2-2.0-0:i386 libfreetype6:i386 libdbus-1-3:i386 libsqlite3-0:i386
+\end{lstlisting}
+
+\section{添加与卸载PPA源}
+\begin{lstlisting}
+添加：
+sudo add-apt-repository ppa:XXX/YYY
+sudo apt update
+sudo apt install YYY
+卸载：
+sudo apt install ppa-purge
+sudo ppa-purge ppa:XXX
+\end{lstlisting}
+
+
+\chapter{KDE neon 折腾笔记}
+
+\section{KDE neon 安装与简介}
+\begin{lstlisting}
+KDE neon基于Ubuntu LTS，由KDE项目主导开发，采用滚动更新的KDE桌面环境，有着很不错的使用体验。
+官方主页：https://neon.kde.org/
+下载地址：https://neon.kde.org/download
+\end{lstlisting}
+
+\section{使用清华大学更新源}
+\begin{lstlisting}
+https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/
+sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
+sudo nano /etc/apt/sources.list
+\end{lstlisting}
+
+\section{安装完整中文语言包支持}
+\begin{lstlisting}
+sudo apt install language-pack-zh-hans language-pack-kde-zh-hans language-pack-gnome-zh-hans
+如果不安装这些中文语言包，则部分程序界面将显示英文。
+\end{lstlisting}
+
+\section{中文字体设置}
+\begin{lstlisting}
+系统设置 - 字体：等宽字体改为“Noto Mono 10pt”，小字体改成9pt。
+KWrite - 设置 - 配置编辑器 - 字体和颜色 - 字体“Noto Serif CJK SC 11pt”。
+\end{lstlisting}
+
+\section{安装中州韵输入法}
+详见\ref{section:fcitx_rime}
+
+\section{重启KDE桌面环境}
+\begin{lstlisting}
+Alt+F2，输入并回车：kquitapp5 plasmashell && kstart5 plasmashell
+以后Alt+F2可以从历史命令中执行。
+\end{lstlisting}
+
+\section{卸载snap和flatpak}
+\begin{lstlisting}
+sudo apt purge snapd flatpak
+sudo apt autoremove --purge
+\end{lstlisting}
+
+
+\chapter{更多笔记·部分已过时}
+
+\section{LightDM配置维护}
+
+\subsection{修改lightdm登陆分辨率}
+\begin{lstlisting}
+查询：xrandr -q
+输出：HDMI-0 connected primary 1920x1080+0+0 (normal...
+测试：xrandr --output HDMI-0 --primary --mode 1920x1080
+修改：sudo nano /etc/lightdm/lightdm.conf
+添加：display-setup-script=xrandr --output HDMI-0 --primary --mode 1920x1080
+\end{lstlisting}
+
+\subsection{解决lightdm不加载.profile}
+\begin{lstlisting}
+将~/.profile复制为~/.bash_profile
+新建：~/.xsessionrc，添加内容：
+if [ -f ~/.bash_profile ]; then
+    . ~/.bash_profile
+fi
+\end{lstlisting}
+
+\subsection{lightdm用户自动登陆}
+\begin{lstlisting}
+sudo nano /etc/lightdm/lightdm.conf
+修改：autologin-user=<用户名>
+\end{lstlisting}
+
+\section{屏幕亮度修正}
+\subsection{方法一}
+\begin{lstlisting}
+查询最大亮度：cat /sys/class/backlight/acpi_video0/max_brightness
+sudo apt install gnome-settings-daemon
+sudo nano /usr/bin/bright
+添加：
+#!/bin/bash
+pkexec /usr/lib/gnome-settings-daemon/gsd-backlight-helper --set-brightness 15
+其中--set-brightness 15中的值视需要在max_brightness的1/2和3/4之间取。
+添加可执行权限：chmod +x /usr/bin/bright
+设置：
+sudo apt install libglib2.0-bin
+gsettings set org.gnome.settings-daemon.peripherals.input-devices hotplug-command "/usr/bin/bright"
+查看：
+cat /sys/class/backlight/acpi_video0/*brightness
+\end{lstlisting}
+
+\subsection{方法二}
+\begin{lstlisting}
+sudo apt install xbacklight
+编辑：~/.profile
+添加：xbacklight -set 60
+\end{lstlisting}
+
+\section{创建Android可连接的WIFI热点}
+\begin{lstlisting}
+查看无线网上型号，确定驱动：sudo lshw -class network
+例如：“vendor: Ralink”
+则需要安装驱动：sudo apt install firmware-ralink
+否则网卡会处在禁用状态：*-usb:1 DISABLED
+sudo apt install hostapd
+sudo nano /etc/default/hostapd
+添加：DAEMON_CONF="/etc/hostapd/hostapd.conf"
+sudo nano /etc/hostapd/hostapd.conf
+添加：
+interface=wlan0
+bridge=br0
+driver=nl80211
+ssid=Forever
+hw_mode=g
+channel=6
+macaddr_acl=0
+auth_algs=1
+wpa=3
+wpa_passphrase=20070831
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+桥接：apt install bridge-utils
+sudo nano /etc/network/interfaces
+添加：
+# loopback network interface
+auto lo br0
+iface lo inet loopback
+# wireless wlan0
+allow-hotplug wlan0
+iface wlan0 inet manual
+# eth0 connected to the ISP router
+allow-hotplug eth0
+iface eth0 inet manual
+# setup bridge
+iface br0 inet static
+bridge_ports wlan0 eth0
+address 192.168.5.195
+netmask 255.255.255.0
+gateway 192.168.5.253
+dns-nameservers 192.168.5.253 8.8.8.8 8.8.4.4
+\end{lstlisting}
+
+\section{Wine配置方法}
+
+\subsection{配置Wine纯净版}
+\begin{lstlisting}
+1. Dash -> 搜索wine，运行Configure Wine配置程序
+2. 激活“函数库”页面，在“新增函数库顶替”下拉框里输入“winemenubuilder.exe”，添加，编辑，停用
+3. 激活“函数库”页面，在“新增函数库顶替”下拉框里输入“winemine.exe”，添加，编辑，停用
+如果已经将int main() { return 0; }编译成main.exe，则可以执行：
+cp -f main.exe $HOME/.wine/drive_c/windows/system32/winemenubuilder.exe
+cp -f main.exe $HOME/.wine/drive_c/windows/system32/winemine.exe
+然后将第2、3两步中的停用改成原装。
+4. “驱动器”页面，添加D分区，路径指定为$HOME/qpSOFT/Wine；同时将Z分区路径修改为$HOME
+5. “关于”页面，填写Windows注册信息，姓名：loaden，单位：qpsoft
+6. 运行Winetricks程序，安装字体：corefonts，然后从XP系统拷贝simhei.ttf simsun.ttc至Fonts目录
+7. 视需要安装DLL或组件：winetricks cmd vcrun6
+\end{lstlisting}
+
+\subsection{彻底清理Wine}
+\begin{lstlisting}
+删除$HOME/.local/share/applications/mimeapps.list中含有wine的条目
+删除$HOME/.wine目录
+find $HOME/.config -name '*wine*' -exec rm {} \;
+find $HOME/.local -name '*wine*' -exec rm {} \;
+find $HOME/.local -name '*wine*' -exec rm -r {} \;
+rm -rf $HOME/.local/share/icons/hicolor
+rm -f $HOME/.local/share/applications/mimeinfo.cache
+\end{lstlisting}
+
+\subsection{Wine调用批处理时字体错误处理}
+\begin{lstlisting}
+err:wineconsole:WCUSER_SetFont wrong font
+err:wineconsole:WINECON_Fatal Couldn't find a decent font, aborting
+'推荐方案：
+$wine cmd
+$XXX.bat
+备用方案：
+$LANG=C
+$wineconsole cmd 或$wineconsole XXX.bat
+这样就不会存在找不到中文字体的问题了，但要支持中文：
+1. 批处理文件编码必须是GBK
+2. 行尾必须用Windows风格
+\end{lstlisting}
+
+\subsection{64位系统，通过Wine模拟纯32位Windows}
+\begin{lstlisting}
+打开终端，预设环境变量：
+export WINEARCH=win32
+export WINEPREFIX=$HOME/.wine32/
+winecfg
+winetricks ie6
+这样就可以解决64位中，Wine无法安装32位IE的错误。
+不过以后每次运行纯32位Windows中的程序，例如IE6，就需要先导出环境变量了。
+通过bash脚本可以简化操作：wine32.sh
+#!/bin/bash
+export WINEARCH=win32
+export WINEPREFIX=$HOME/.wine32/
+winefile
+在文件管理器中双击安装或运行。
+\end{lstlisting}
+
+\subsection{英文系统安装Wine及中文支持}
+\begin{lstlisting}
+sudo apt install wine winetricks #wine
+Alt+F2运行wine，按弹出提示操作，之后配置。
+英文环境中文乱码：
+单个程序：LANG="zh_CN.UTF8" wine XXX.exe
+所有程序：修改/usr/bin/wine
+改最后一行：exec "$WINELOADER" "$@"
+为：LANG=zh_CN.UTF8 exec "$WINELOADER" "$@"
+注意：如果安装程序时出现崩溃，考虑先还原这一行，安装完成后再恢复。
+\end{lstlisting}
+
+\section{MlDonkey选项设置}
+\begin{lstlisting}
+Options > Web infos，Remove掉所有项目，清空~/.mldonkey/web_infos目录后添加下面三项：
+server.met http://ed2k.im/server.met 24
+guarding.p2p http://ed2k.im/ipfilter.dat 96
+kad http://ed2k.im/nodes.dat 24
+Options > Client，修改：
+max_hard_download_rate 0
+max_opened_connections 600
+Options > Net，修改：
+enable_kademlia true
+enable_bittorrent false
+enable_fileTP false
+外网用户或者启用了UPnP，还可以：
+ED2K-force_client_high_id true
+ED2K-force_high_id true
+局域网映射高ID：
+apt install miniupnpc
+在Help+ -> SysInfo里查port，然后添加到mlupnp脚本并复制到/usr/bin目录下：
+#!/bin/bash
+upnpc -r 18081 TCP 18085 UDP 8836 UDP && mlnet&
+\end{lstlisting}
+
+\end{document}
